@@ -1,0 +1,274 @@
+{% comment %}
+  VironaX Category Banners
+  Large 50/50 category banners for Rings and Gemstone Beads
+  OTTASILVER-inspired styling
+  ALL TEXT NOW TRANSLATABLE
+{% endcomment %}
+
+<div class="vironax-categories">
+  <div class="vironax-categories__grid">
+    <!-- Rings Banner -->
+    <a href="{{ section.settings.category_1_link }}" class="vironax-categories__banner">
+      <div class="vironax-categories__image-container">
+        {% if section.settings.category_1_image != blank %}
+          <img 
+            src="{{ section.settings.category_1_image | image_url: width: 1000 }}" 
+            alt="{{ section.settings.category_1_title }}"
+            class="vironax-categories__image"
+            loading="lazy"
+          >
+        {% else %}
+          <div class="vironax-categories__placeholder">
+            <span>{{ section.settings.placeholder_text }}</span>
+          </div>
+        {% endif %}
+        <div class="vironax-categories__overlay"></div>
+        <div class="vironax-categories__content">
+          <h3 class="vironax-categories__title">{{ section.settings.category_1_title }}</h3>
+          <span class="vironax-categories__cta">
+            {{ section.settings.cta_text }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+    
+    <!-- Gemstone Beads Banner -->
+    <a href="{{ section.settings.category_2_link }}" class="vironax-categories__banner">
+      <div class="vironax-categories__image-container">
+        {% if section.settings.category_2_image != blank %}
+          <img 
+            src="{{ section.settings.category_2_image | image_url: width: 1000 }}" 
+            alt="{{ section.settings.category_2_title }}"
+            class="vironax-categories__image"
+            loading="lazy"
+          >
+        {% else %}
+          <div class="vironax-categories__placeholder">
+            <span>{{ section.settings.placeholder_text }}</span>
+          </div>
+        {% endif %}
+        <div class="vironax-categories__overlay"></div>
+        <div class="vironax-categories__content">
+          <h3 class="vironax-categories__title">{{ section.settings.category_2_title }}</h3>
+          <span class="vironax-categories__cta">
+            {{ section.settings.cta_text }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<style>
+  .vironax-categories {
+    padding: 0 5%;
+    background-color: #FFFFFF;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .vironax-categories__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  
+  .vironax-categories__banner {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .vironax-categories__image-container {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  
+  .vironax-categories__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  
+  .vironax-categories__banner:hover .vironax-categories__image {
+    transform: scale(1.05);
+  }
+  
+  .vironax-categories__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+  
+  .vironax-categories__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    transition: background 0.4s ease;
+  }
+  
+  .vironax-categories__banner:hover .vironax-categories__overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  }
+  
+  .vironax-categories__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px;
+    z-index: 2;
+  }
+  
+  .vironax-categories__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color:  #FFFFFF !important;
+    margin: 0 0 16px 0;
+  }
+  
+  .vironax-categories__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #FFFFFF;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+  }
+  
+  .vironax-categories__banner:hover .vironax-categories__cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  @media screen and (max-width: 749px) {
+    .vironax-categories {
+      padding: 0 4%;
+    }
+    
+    .vironax-categories__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
+    .vironax-categories__image-container {
+      aspect-ratio: 16/9;
+    }
+    
+    .vironax-categories__content {
+      padding: 24px;
+    }
+    
+    .vironax-categories__cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VironaX Category Banners",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Placeholder Text",
+      "default": "Add Image"
+    },
+    {
+      "type": "header",
+      "content": "Category 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_1_image",
+      "label": "Category 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "category_1_title",
+      "label": "Category 1 Title",
+      "default": "Rings"
+    },
+    {
+      "type": "url",
+      "id": "category_1_link",
+      "label": "Category 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Category 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_2_image",
+      "label": "Category 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "category_2_title",
+      "label": "Category 2 Title",
+      "default": "Gemstone Beads"
+    },
+    {
+      "type": "url",
+      "id": "category_2_link",
+      "label": "Category 2 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VironaX Category Banners"
+    }
+  ]
+}
+{% endschema %}

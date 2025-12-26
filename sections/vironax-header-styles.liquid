@@ -1,0 +1,286 @@
+{% comment %}
+  VironaX Header Styles
+  Apply OTTASILVER-style typography and spacing to Prestige theme header
+  Add this as a section and include it on all pages
+{% endcomment %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+  
+  :root {
+    --vironax-font: 'Montserrat', sans-serif;
+    --vironax-black: #000000;
+    --vironax-white: #FFFFFF;
+    --vironax-gray: #666666;
+    --vironax-light-gray: #E5E5E5;
+    --vironax-letter-spacing: 0.15em;
+    --vironax-letter-spacing-tight: 0.08em;
+  }
+  
+  /* Header Container */
+  .header,
+  .site-header,
+  [class*="header"] {
+    background-color: var(--vironax-white) !important;
+    border-bottom: 1px solid var(--vironax-light-gray);
+  }
+  
+  /* Navigation Links */
+  .header__inline-menu a,
+  .header-menu a,
+  .nav a,
+  .main-nav a,
+  [class*="header"] nav a,
+  .header__menu-item {
+    font-family: var(--vironax-font) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: var(--vironax-letter-spacing) !important;
+    color: var(--vironax-black) !important;
+    text-decoration: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .header__inline-menu a:hover,
+  .header-menu a:hover,
+  .nav a:hover,
+  .main-nav a:hover,
+  [class*="header"] nav a:hover,
+  .header__menu-item:hover {
+    opacity: 0.6 !important;
+  }
+  
+  /* Dropdown Menus */
+  .header__submenu,
+  .submenu,
+  .dropdown-menu,
+  [class*="dropdown"],
+  .mega-menu {
+    background-color: var(--vironax-white) !important;
+    border: 1px solid var(--vironax-light-gray) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    padding: 24px !important;
+  }
+  
+  /* Dropdown Links */
+  .header__submenu a,
+  .submenu a,
+  .dropdown-menu a,
+  .mega-menu a {
+    font-family: var(--vironax-font) !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    text-transform: none !important;
+    letter-spacing: var(--vironax-letter-spacing-tight) !important;
+    color: var(--vironax-black) !important;
+    padding: 8px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  
+  .header__submenu a:hover,
+  .submenu a:hover,
+  .dropdown-menu a:hover,
+  .mega-menu a:hover {
+    opacity: 0.6 !important;
+  }
+  
+  /* Dropdown Images (Small Square Icons) */
+  .header__submenu img,
+  .submenu img,
+  .dropdown-menu img,
+  .mega-menu img {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: cover !important;
+    border-radius: 0 !important;
+  }
+  
+  /* Header Icons (Search, Account, Cart) */
+  .header__icon,
+  .header-icons a,
+  .header-icons button,
+  [class*="header"] .icon,
+  .cart-icon,
+  .search-icon,
+  .account-icon {
+    color: var(--vironax-black) !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .header__icon:hover,
+  .header-icons a:hover,
+  .header-icons button:hover {
+    opacity: 0.6 !important;
+  }
+  
+  /* Currency/Language Selectors */
+  .localization-selector,
+  .currency-selector,
+  .language-selector,
+  [class*="currency"],
+  [class*="language"] {
+    font-family: var(--vironax-font) !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: var(--vironax-letter-spacing-tight) !important;
+    color: var(--vironax-black) !important;
+  }
+  
+  /* Logo */
+.header__logo svg,
+.site-logo svg,
+.logo svg,
+.header__logo img,
+.site-logo img,
+.logo img {
+  max-height: 80px !important;
+  height: 80px !important;
+  width: auto !important;
+}
+
+.header__logo,
+.site-logo,
+.logo {
+  max-width: 250px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+  
+  /* Mobile Menu */
+  @media screen and (max-width: 989px) {
+    .mobile-nav a,
+    .drawer-menu a,
+    [class*="mobile"] nav a {
+      font-family: var(--vironax-font) !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      text-transform: uppercase !important;
+      letter-spacing: var(--vironax-letter-spacing) !important;
+      color: var(--vironax-black) !important;
+      padding: 16px 0 !important;
+      border-bottom: 1px solid var(--vironax-light-gray) !important;
+    }
+  }
+  
+  
+  
+  body {
+    font-family: var(--vironax-font) !important;
+    color: var(--vironax-black) !important;
+    background-color: var(--vironax-white) !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--vironax-font) !important;
+    font-weight: 600 !important;
+    color: var(--vironax-black) !important;
+  }
+  
+  /* Buttons - OTTASILVER Style */
+  .button,
+  .btn,
+  button[type="submit"],
+  .shopify-payment-button button,
+  .add-to-cart,
+  [class*="button"] {
+    font-family: var(--vironax-font) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: var(--vironax-letter-spacing) !important;
+    background-color: var(--vironax-black) !important;
+    color: var(--vironax-white) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 16px 32px !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .button:hover,
+  .btn:hover,
+  button[type="submit"]:hover,
+  .add-to-cart:hover {
+    opacity: 0.8 !important;
+    background-color: var(--vironax-black) !important;
+    color: var(--vironax-white) !important;
+  }
+  
+  /* Secondary/Outline Buttons */
+  .button--secondary,
+  .btn-secondary,
+  .button--outline {
+    background-color: transparent !important;
+    color: var(--vironax-black) !important;
+    border: 1px solid var(--vironax-black) !important;
+  }
+  
+  ..button--secondary:hover,
+.btn-secondary:hover,
+.button--outline:hover {
+background-color: var(--vironax-black) !important;
+color: var(--vironax-white) !important;
+  }
+
+/* Fix page background - remove black borders */
+
+html,
+body,
+.page-container,
+.page-wrapper,
+.main-content,
+.shopify-section,
+#MainContent,
+#main,
+main,
+.collection,
+.collection-page,
+[class*="collection"],
+.page-content,
+.content-wrapper,
+#shopify-section-collection-template,
+.template-collection,
+section,
+.section {
+  background-color: #FFFFFF !important;
+}
+
+/* Target Prestige theme specific elements */
+.collection-template,
+.collection__main,
+.collection__products,
+.product-list,
+.product-grid {
+  background-color: #FFFFFF !important;
+}
+
+/* Force full page white */
+* {
+  --background: #FFFFFF;
+  --color-background: #FFFFFF;
+}
+/* Fix body color scheme background */
+body.color-scheme,
+body.color-scheme--scheme-2,
+.color-scheme {
+  background-color: #FFFFFF !important;
+  --background: 255 255 255 !important;
+}
+</style>
+
+
+
+{% schema %}
+{
+  "name": "VironaX Header Styles",
+  "settings": [],
+  "presets": [
+    {
+      "name": "VironaX Header Styles"
+    }
+  ]
+}
+{% endschema %}

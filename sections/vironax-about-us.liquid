@@ -1,0 +1,410 @@
+{% comment %}
+  VironaX Client Reviews
+  Full-width video with scroll-triggered audio
+  OTTASILVER-inspired styling
+{% endcomment %}
+
+<div class="vironax-reviews">
+  <div class="vironax-reviews__header">
+    <h2 class="vironax-reviews__title">{{ section.settings.title }}</h2>
+    <p class="vironax-reviews__subtitle">{{ section.settings.subtitle }}</p>
+  </div>
+  
+  <div class="vironax-reviews__video-container">
+    {% if section.settings.video_url != blank %}
+      <video 
+        id="vironax-reviews-video"
+        autoplay 
+        loop 
+        muted 
+        playsinline 
+        class="vironax-reviews__video"
+      >
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+      </video>
+      
+      <!-- Mute/Unmute Button -->
+      <button 
+        id="vironax-mute-btn" 
+        class="vironax-reviews__mute-btn"
+        aria-label="Toggle sound"
+      >
+        <svg class="vironax-reviews__mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line class="vironax-reviews__mute-line" x1="23" y1="9" x2="17" y2="15"/>
+          <line class="vironax-reviews__mute-line" x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+        <svg class="vironax-reviews__unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+      </button>
+    {% else %}
+      <div class="vironax-reviews__placeholder">
+        <span>{{ section.settings.placeholder_text }}</span>
+      </div>
+    {% endif %}
+    
+    <div class="vironax-reviews__overlay"></div>
+    
+    <a href="{{ section.settings.reviews_link }}" class="vironax-reviews__content">
+      <div class="vironax-reviews__stars">
+        {% for i in (1..5) %}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        {% endfor %}
+      </div>
+      <h3 class="vironax-reviews__review-title">{{ section.settings.review_title }}</h3>
+      {% if section.settings.reviews_link != blank %}
+        <span class="vironax-reviews__cta">
+          {{ section.settings.cta_text }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      {% endif %}
+    </a>
+  </div>
+</div>
+
+<style>
+  .vironax-reviews {
+    padding: 80px 5%;
+    background-color: #FFFFFF;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .vironax-reviews__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .vironax-reviews__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;  /* Make it bigger */
+    font-weight: 700;  /* Make it bolder */;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #000000;
+    margin: 0 0 8px 0;
+  }
+  
+  .vironax-reviews__subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;  /* Make it bigger */
+    font-weight: 500;  /* Make it slightly bolder */
+    color: #666666;
+    margin: 0;
+    letter-spacing: 0.05em;
+  }
+  
+  .vironax-reviews__video-container {
+    position: relative;
+    aspect-ratio: 9/16;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  .vironax-reviews__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .vironax-reviews__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+  
+  .vironax-reviews__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+    transition: background 0.4s ease;
+  }
+  
+  .vironax-reviews__video-container:hover .vironax-reviews__overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  }
+  
+  .vironax-reviews__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px;
+    z-index: 2;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+  .vironax-reviews__stars {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 16px;
+    color: #FFFFFF;
+  }
+  
+  .vironax-reviews__review-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+    margin: 0 0 12px 0;
+    text-align: center;
+  }
+  
+  .vironax-reviews__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    margin: 0 auto;
+    width: fit-content;
+    display: flex;
+  }
+  
+  .vironax-reviews__content:hover .vironax-reviews__cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Mute Button */
+  .vironax-reviews__mute-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    transition: all 0.3s ease;
+  }
+  
+  .vironax-reviews__mute-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .vironax-reviews__mute-btn svg {
+    color: #FFFFFF;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .vironax-reviews {
+      padding: 60px 4%;
+    }
+    
+    .vironax-reviews__video-container {
+      max-width: 100%;
+    }
+    
+    .vironax-reviews__content {
+      padding: 24px;
+    }
+    
+    .vironax-reviews__cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .vironax-reviews__mute-btn {
+      width: 40px;
+      height: 40px;
+      top: 16px;
+      right: 16px;
+    }
+    
+    .vironax-reviews__mute-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReviewsVideo);
+  } else {
+    initReviewsVideo();
+  }
+  
+  function initReviewsVideo() {
+    const video = document.getElementById('vironax-reviews-video');
+    const muteBtn = document.getElementById('vironax-mute-btn');
+    const muteIcon = document.querySelector('.vironax-reviews__mute-icon');
+    const unmuteIcon = document.querySelector('.vironax-reviews__unmute-icon');
+    
+    if (!video || !muteBtn) return;
+    
+    let isMuted = true;
+    let hasStartedAudio = false;
+    
+    // Intersection Observer for scroll-triggered audio
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Section is in view - unmute and play
+            if (!hasStartedAudio) {
+              video.muted = false;
+              isMuted = false;
+              updateMuteButton();
+              hasStartedAudio = true;
+            } else if (!isMuted) {
+              video.muted = false;
+            }
+            video.play().catch(() => {
+              // Autoplay failed - keep muted
+              video.muted = true;
+              isMuted = true;
+              updateMuteButton();
+            });
+          } else {
+            // Section is out of view - pause (optional: or just mute)
+            video.pause();
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Trigger when 50% of video is visible
+      }
+    );
+    
+    observer.observe(video);
+    
+    // Mute button toggle
+    muteBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      isMuted = !isMuted;
+      video.muted = isMuted;
+      updateMuteButton();
+    });
+    
+    function updateMuteButton() {
+      if (isMuted) {
+        muteIcon.style.display = 'block';
+        unmuteIcon.style.display = 'none';
+      } else {
+        muteIcon.style.display = 'none';
+        unmuteIcon.style.display = 'block';
+      }
+    }
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "VironaX Client Reviews",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Titles"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Title",
+      "default": "WHAT OUR CLIENTS SAY"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Trusted by Thousands"
+    },
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (MP4)",
+      "info": "Paste direct MP4 link from Settings > Files"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Placeholder Text",
+      "default": "Add Video URL"
+    },
+    {
+      "type": "header",
+      "content": "Content Over Video"
+    },
+    {
+      "type": "text",
+      "id": "review_title",
+      "label": "Review Title",
+      "default": "800+ 5-Star Reviews"
+    },
+    {
+      "type": "url",
+      "id": "reviews_link",
+      "label": "Reviews Page Link"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Read Reviews"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VironaX Client Reviews"
+    }
+  ]
+}
+{% endschema %}

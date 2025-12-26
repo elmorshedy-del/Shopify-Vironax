@@ -1,0 +1,450 @@
+{% comment %}
+  VironaX Hero Carousel
+  Multiple slides with 4-second autoplay
+  Left-aligned text, lighter overlay
+{% endcomment %}
+
+<div class="vironax-hero">
+  <div class="vironax-hero__slides">
+    {% for block in section.blocks %}
+      <div class="vironax-hero__slide {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
+        {% if block.settings.image != blank %}
+          <img 
+            src="{{ block.settings.image | image_url: width: 1920 }}" 
+            alt="VironaX Hero"
+            class="vironax-hero__image"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          >
+        {% else %}
+          <div class="vironax-hero__placeholder">
+            <span>Add Hero Image {{ forloop.index }}</span>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  
+  <div class="vironax-hero__overlay"></div>
+  
+  <div class="vironax-hero__content">
+    <h1 class="vironax-hero__headline">{{ section.settings.headline }}</h1>
+    
+    <div class="vironax-hero__subtexts">
+      <p class="vironax-hero__subtext">{{ section.settings.subtext_rings }}</p>
+      <p class="vironax-hero__subtext vironax-hero__subtext--beads">{{ section.settings.subtext_beads }}</p>
+    </div>
+    
+    <p class="vironax-hero__small-text">{{ section.settings.small_text }}</p>
+    
+    <a href="{{ section.settings.button_link }}" class="vironax-hero__button">
+      {{ section.settings.button_text }}
+    </a>
+  </div>
+  
+  <!-- Navigation Dots -->
+  <div class="vironax-hero__dots">
+    {% for block in section.blocks %}
+      <button class="vironax-hero__dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+    {% endfor %}
+  </div>
+  
+  <!-- Navigation Arrows -->
+  <button class="vironax-hero__arrow vironax-hero__arrow--prev" aria-label="Previous">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="vironax-hero__arrow vironax-hero__arrow--next" aria-label="Next">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+<style>
+  .vironax-hero {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    min-height: 550px;
+    max-height: 800px;
+    overflow: hidden;
+    background-color: #FFFFF;
+  }
+  
+  .vironax-hero__slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .vironax-hero__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  
+  .vironax-hero__slide.is-active {
+    opacity: 1;
+  }
+  
+  .vironax-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+  }
+  
+  .vironax-hero__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+  
+  /* LEFT-SIDE ONLY OVERLAY - Lighter */
+  .vironax-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* LEFT-ALIGNED CONTENT */
+  .vironax-hero__content {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    text-align: left;
+    color: #FFFFFF !important;
+    max-width: 480px;
+    z-index: 2;
+  }
+  
+  .vironax-hero__headline {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 600;
+    color: #FFFFFF !important;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0 0 16px 0;
+    line-height: 1.25;
+  }
+  
+  .vironax-hero__subtexts {
+    margin-bottom: 12px;
+  }
+  
+  .vironax-hero__subtext {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(12px, 1.5vw, 14px);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    margin: 0 0 6px 0;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+  
+  .vironax-hero__subtext--beads {
+    font-style: italic;
+    opacity: 0.8;
+  }
+  
+  .vironax-hero__small-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 0 0 20px 0;
+    opacity: 0.7;
+  }
+  
+  .vironax-hero__button {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #000000;
+    background-color: #FFFFFF;
+    padding: 14px 36px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid #FFFFFF;
+  }
+  
+  .vironax-hero__button:hover {
+    background-color: transparent;
+    color: #FFFFFF;
+  }
+  
+  /* NAVIGATION DOTS */
+  .vironax-hero__dots {
+    position: absolute;
+    bottom: 24px;
+    left: 5%;
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+  }
+  
+  .vironax-hero__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+  
+  .vironax-hero__dot.is-active,
+  .vironax-hero__dot:hover {
+    background: #FFFFFF;
+  }
+  
+  /* NAVIGATION ARROWS */
+  .vironax-hero__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #FFFFFF;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+  }
+  
+  .vironax-hero__arrow:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .vironax-hero__arrow--prev {
+    left: 16px;
+  }
+  
+  .vironax-hero__arrow--next {
+    right: 16px;
+  }
+  
+  /* MOBILE */
+  @media screen and (max-width: 749px) {
+    .vironax-hero {
+      height: 75vh;
+      min-height: 450px;
+    }
+    
+    .vironax-hero__overlay {
+      width: 100%;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+    }
+    
+    .vironax-hero__content {
+      top: auto;
+      bottom: 80px;
+      left: 5%;
+      right: 5%;
+      transform: none;
+      max-width: none;
+    }
+    
+    .vironax-hero__headline {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    
+    .vironax-hero__subtext {
+      font-size: 12px;
+    }
+    
+    .vironax-hero__button {
+      padding: 12px 28px;
+      font-size: 10px;
+    }
+    
+    .vironax-hero__dots {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .vironax-hero__arrow {
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const hero = document.querySelector('.vironax-hero');
+  if (!hero) return;
+  
+  const slides = hero.querySelectorAll('.vironax-hero__slide');
+  const dots = hero.querySelectorAll('.vironax-hero__dot');
+  const prevBtn = hero.querySelector('.vironax-hero__arrow--prev');
+  const nextBtn = hero.querySelector('.vironax-hero__arrow--next');
+  
+  if (slides.length <= 1) {
+    // Hide nav if only 1 slide
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+    hero.querySelector('.vironax-hero__dots').style.display = 'none';
+    return;
+  }
+  
+  let currentIndex = 0;
+  let autoplayInterval;
+  
+  function goToSlide(index) {
+    slides[currentIndex].classList.remove('is-active');
+    dots[currentIndex].classList.remove('is-active');
+    
+    currentIndex = (index + slides.length) % slides.length;
+    
+    slides[currentIndex].classList.add('is-active');
+    dots[currentIndex].classList.add('is-active');
+  }
+  
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+  
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+  
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 4000); // 4 seconds
+  }
+  
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+  
+  // Event listeners
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    stopAutoplay();
+    prevSlide();
+    startAutoplay();
+  });
+  
+  if (nextBtn) nextBtn.addEventListener('click', function() {
+    stopAutoplay();
+    nextSlide();
+    startAutoplay();
+  });
+  
+  dots.forEach(function(dot, index) {
+    dot.addEventListener('click', function() {
+      stopAutoplay();
+      goToSlide(index);
+      startAutoplay();
+    });
+  });
+  
+  // Pause on hover
+  hero.addEventListener('mouseenter', stopAutoplay);
+  hero.addEventListener('mouseleave', startAutoplay);
+  
+  // Start autoplay
+  startAutoplay();
+});
+</script>
+
+{% schema %}
+{
+  "name": "VironaX Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Modern Elegance. Ottoman Heritage. Gulf Soul."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext_rings",
+      "label": "Subtext (Rings)",
+      "default": "925 sterling silver. Certified real gemstones. Handcrafted to wear today, inherit tomorrow."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext_beads",
+      "label": "Subtext (Beads)",
+      "default": "Gemstone Beads — each bead, a hand-selected gemstone."
+    },
+    {
+      "type": "text",
+      "id": "small_text",
+      "label": "Small Text",
+      "default": "Made in Turkey — where silver has been crafted for 500 years."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image",
+          "info": "Recommended: 1920x1080px (16:9)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VironaX Hero",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

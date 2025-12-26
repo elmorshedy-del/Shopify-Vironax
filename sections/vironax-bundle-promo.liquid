@@ -1,0 +1,215 @@
+{% comment %}
+  VironaX Bundle Promo
+  Shop bundle promo banner - 20% OFF
+  OTTASILVER-inspired styling
+{% endcomment %}
+
+<div class="vironax-bundle">
+  <div class="vironax-bundle__container">
+    <div class="vironax-bundle__content">
+      <span class="vironax-bundle__label">{{ section.settings.label }}</span>
+      <h2 class="vironax-bundle__headline">{{ section.settings.headline }}</h2>
+      <p class="vironax-bundle__description">{{ section.settings.description }}</p>
+      <a href="{{ section.settings.button_link }}" class="vironax-bundle__button">
+        {{ section.settings.button_text }}
+      </a>
+    </div>
+    
+    <div class="vironax-bundle__image-container">
+      {% if section.settings.image != blank %}
+        <img 
+          src="{{ section.settings.image | image_url: width: 800 }}" 
+          alt="{{ section.settings.headline }}"
+          class="vironax-bundle__image"
+          loading="lazy"
+        >
+      {% else %}
+        <div class="vironax-bundle__placeholder">
+          <span>Add Bundle Image</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .vironax-bundle {
+    padding: 0 5%;
+    background-color: #FFFFFF;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .vironax-bundle__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #F8F8F8;
+    overflow: hidden;
+  }
+  
+  .vironax-bundle__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+  }
+  
+  .vironax-bundle__label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #666666;
+    margin-bottom: 16px;
+  }
+  
+  .vironax-bundle__headline {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #000000;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
+  }
+  
+  .vironax-bundle__description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 1.6;
+    margin: 0 0 32px 0;
+  }
+  
+  .vironax-bundle__button {
+    display: inline-block;
+    align-self: flex-start;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #FFFFFF;
+    background-color: #000000;
+    padding: 16px 40px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .vironax-bundle__button:hover {
+    opacity: 0.8;
+  }
+  
+  .vironax-bundle__image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .vironax-bundle__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-height: 400px;
+  }
+  
+  .vironax-bundle__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666666;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+  
+  @media screen and (max-width: 989px) {
+    .vironax-bundle__container {
+      grid-template-columns: 1fr;
+    }
+    
+    .vironax-bundle__content {
+      padding: 50px 40px;
+      order: 2;
+    }
+    
+    .vironax-bundle__image-container {
+      order: 1;
+    }
+    
+    .vironax-bundle__image,
+    .vironax-bundle__placeholder {
+      min-height: 300px;
+    }
+  }
+  
+  @media screen and (max-width: 749px) {
+    .vironax-bundle {
+      padding: 0 4%;
+    }
+    
+    .vironax-bundle__content {
+      padding: 40px 24px;
+      text-align: center;
+    }
+    
+    .vironax-bundle__button {
+      align-self: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VironaX Bundle Promo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Shop Bundle"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Get 20% Off"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Bundle a ring with prayer beads and save. The perfect combination for the modern gentleman."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Bundles"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bundle Image",
+      "info": "Show ring + beads together"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VironaX Bundle Promo"
+    }
+  ]
+}
+{% endschema %}

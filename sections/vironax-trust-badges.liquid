@@ -1,0 +1,219 @@
+{% comment %}
+  VironaX Trust Badges
+  Scrolling trust badges strip
+  OTTASILVER-inspired styling
+{% endcomment %}
+
+<div class="vironax-trust-badges">
+  <div class="vironax-trust-badges__track">
+    {% for i in (1..3) %}
+      <div class="vironax-trust-badges__content">
+        <!-- 4 Days to Doorstep -->
+        <div class="vironax-trust-badges__item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          <span>{{ section.settings.badge_1 }}</span>
+        </div>
+        
+        <!-- Certified Gemstones -->
+        <div class="vironax-trust-badges__item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <div class="vironax-trust-badges__text-group">
+            <span>{{ section.settings.badge_2 }}</span>
+            <span class="vironax-trust-badges__subtext">{{ section.settings.badge_2_sub }}</span>
+          </div>
+        </div>
+        
+        <!-- 925 Sterling Silver -->
+        <div class="vironax-trust-badges__item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>{{ section.settings.badge_3 }}</span>
+        </div>
+        
+        <!-- 5 Years Guarantee -->
+        <div class="vironax-trust-badges__item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <span>{{ section.settings.badge_4 }}</span>
+        </div>
+        
+        <!-- Reviews -->
+        <div class="vironax-trust-badges__item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span>{{ section.settings.badge_5 }}</span>
+        </div>
+        
+        <!-- Rings Sold -->
+        <div class="vironax-trust-badges__item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/>
+          </svg>
+          <span>{{ section.settings.badge_6 }}</span>
+        </div>
+        
+        <!-- Tamara & Tabby -->
+        <div class="vironax-trust-badges__item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          <span>{{ section.settings.badge_7 }}</span>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .vironax-trust-badges {
+    background-color: #F8F8F8;
+    overflow: hidden;
+    padding: 16px 0;
+    border-top: 1px solid #E5E5E5;
+    border-bottom: 1px solid #E5E5E5;
+  }
+  
+  .vironax-trust-badges__track {
+    display: flex;
+    animation: vironax-trust-scroll 40s linear infinite;
+    width: fit-content;
+  }
+  
+  .vironax-trust-badges__content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 0 25px;
+    flex-shrink: 0;
+  }
+  
+  .vironax-trust-badges__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  
+  .vironax-trust-badges__item svg {
+    flex-shrink: 0;
+    color: #000000;
+  }
+  
+  .vironax-trust-badges__item span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #000000;
+    letter-spacing: 0.05em;
+  }
+  
+  .vironax-trust-badges__text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .vironax-trust-badges__subtext {
+    font-size: 10px !important;
+    font-weight: 400 !important;
+    color: #666666 !important;
+    font-style: italic;
+  }
+  
+  @keyframes vironax-trust-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-33.333%);
+    }
+  }
+  
+  .vironax-trust-badges:hover .vironax-trust-badges__track {
+    animation-play-state: paused;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .vironax-trust-badges__item span {
+      font-size: 11px;
+    }
+    
+    .vironax-trust-badges__content {
+      gap: 35px;
+      padding: 0 18px;
+    }
+    
+    .vironax-trust-badges__item svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VironaX Trust Badges",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "Badge 1",
+      "default": "4 Days to Your Doorstep"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "Badge 2",
+      "default": "Certified Gemstones"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_sub",
+      "label": "Badge 2 Subtext",
+      "default": "Each ring sent with certificate"
+    },
+    {
+      "type": "text",
+      "id": "badge_3",
+      "label": "Badge 3",
+      "default": "925 Sterling Silver"
+    },
+    {
+      "type": "text",
+      "id": "badge_4",
+      "label": "Badge 4",
+      "default": "5 Years Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "badge_5",
+      "label": "Badge 5",
+      "default": "800+ Reviews · 4.8 Rating"
+    },
+    {
+      "type": "text",
+      "id": "badge_6",
+      "label": "Badge 6",
+      "default": "15,000+ Rings Sold"
+    },
+    {
+      "type": "text",
+      "id": "badge_7",
+      "label": "Badge 7",
+      "default": "Pay in 4 with Tamara & Tabby"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VironaX Trust Badges"
+    }
+  ]
+}
+{% endschema %}

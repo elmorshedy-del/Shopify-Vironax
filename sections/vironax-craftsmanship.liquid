@@ -1,0 +1,307 @@
+{% comment %}
+  VironaX Craftsmanship Section
+  Video autoplay on scroll with Turkish artisan story
+  OTTASILVER-inspired styling
+{% endcomment %}
+
+<div class="vironax-craftsmanship">
+  <div class="vironax-craftsmanship__container">
+    <div class="vironax-craftsmanship__content">
+      <span class="vironax-craftsmanship__label">{{ section.settings.label }}</span>
+      <h2 class="vironax-craftsmanship__headline">{{ section.settings.headline }}</h2>
+      <p class="vironax-craftsmanship__description">{{ section.settings.description }}</p>
+      {% if section.settings.button_text != blank %}
+        <button class="vironax-craftsmanship__button" id="vironax-sound-toggle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15" class="vironax-mute-icon"></line>
+            <line x1="17" y1="9" x2="23" y2="15" class="vironax-mute-icon"></line>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" class="vironax-unmute-icon" style="display: none;"></path>
+          </svg>
+          {{ section.settings.button_text }}
+        </button>
+      {% endif %}
+    </div>
+    
+    <div class="vironax-craftsmanship__media">
+      {% if section.settings.video != blank %}
+        <video 
+          class="vironax-craftsmanship__video" 
+          id="vironax-craft-video"
+          loop 
+          muted 
+          playsinline
+          poster="{{ section.settings.video_poster | image_url: width: 800 }}"
+        >
+          <source src="{{ section.settings.video }}" type="video/mp4">
+        </video>
+      {% elsif section.settings.video_url != blank %}
+        <video 
+          class="vironax-craftsmanship__video" 
+          id="vironax-craft-video"
+          loop 
+          muted 
+          playsinline
+          poster="{{ section.settings.video_poster | image_url: width: 800 }}"
+        >
+          <source src="{{ section.settings.video_url }}" type="video/mp4">
+        </video>
+      {% elsif section.settings.fallback_image != blank %}
+        <img 
+          src="{{ section.settings.fallback_image | image_url: width: 800 }}" 
+          alt="{{ section.settings.headline }}"
+          class="vironax-craftsmanship__image"
+          loading="lazy"
+        >
+      {% else %}
+        <div class="vironax-craftsmanship__placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span>Add Video or Image</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .vironax-craftsmanship {
+    padding: 80px 5%;
+    background-color: #FFFFFF;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .vironax-craftsmanship__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  
+  .vironax-craftsmanship__content {
+    padding-right: 40px;
+  }
+  
+  .vironax-craftsmanship__label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #666666;
+    margin-bottom: 20px;
+  }
+  
+  .vironax-craftsmanship__headline {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 24px 0;
+    line-height: 1.2;
+  }
+  
+  .vironax-craftsmanship__description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 1.8;
+    margin: 0 0 32px 0;
+  }
+  
+  .vironax-craftsmanship__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #000000;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  
+  .vironax-craftsmanship__button:hover {
+    opacity: 0.6;
+  }
+  
+  .vironax-craftsmanship__media {
+    position: relative;
+    aspect-ratio: 9/16;
+    overflow: hidden;
+    background-color: #1a1a1a;
+  }
+  
+  .vironax-craftsmanship__video,
+  .vironax-craftsmanship__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .vironax-craftsmanship__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: #666666;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  
+  @media screen and (max-width: 989px) {
+    .vironax-craftsmanship {
+      padding: 60px 4%;
+    }
+    
+    .vironax-craftsmanship__container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    
+    .vironax-craftsmanship__content {
+      padding-right: 0;
+      order: 2;
+    }
+    
+    .vironax-craftsmanship__media {
+      order: 1;
+    }
+  }
+  
+  @media screen and (max-width: 749px) {
+    .vironax-craftsmanship__container {
+      gap: 30px;
+    }
+    
+    .vironax-craftsmanship__content {
+      text-align: center;
+    }
+    
+    .vironax-craftsmanship__button {
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('vironax-craft-video');
+    const soundToggle = document.getElementById('vironax-sound-toggle');
+    
+    if (!video) return;
+    
+    // Intersection Observer for autoplay on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          video.play().catch(e => console.log('Autoplay prevented:', e));
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    observer.observe(video);
+    
+    // Sound toggle
+    if (soundToggle) {
+      const muteIcons = soundToggle.querySelectorAll('.vironax-mute-icon');
+      const unmuteIcons = soundToggle.querySelectorAll('.vironax-unmute-icon');
+      
+      soundToggle.addEventListener('click', function() {
+        video.muted = !video.muted;
+        
+        muteIcons.forEach(icon => {
+          icon.style.display = video.muted ? 'block' : 'none';
+        });
+        unmuteIcons.forEach(icon => {
+          icon.style.display = video.muted ? 'none' : 'block';
+        });
+        
+        this.querySelector('svg').nextSibling.textContent = video.muted ? ' Watch with Sound' : ' Mute';
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "VironaX Craftsmanship",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Handcrafted in Turkey"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Centuries of Silver Mastery"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Turkey has crafted silver for over 500 years. Our master artisans continue this tradition — transforming 925 sterling silver and certified gemstones into modern and Ottoman-inspired pieces, delivered to your door across Saudi Arabia and the Gulf."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Sound Toggle Button Text",
+      "default": "Watch with Sound"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (Shopify-hosted)"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (External)",
+      "info": "Use if video is not hosted on Shopify. Must be direct MP4 link."
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video Poster Image",
+      "info": "Shown before video plays"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback Image",
+      "info": "Shown if no video is provided"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VironaX Craftsmanship"
+    }
+  ]
+}
+{% endschema %}

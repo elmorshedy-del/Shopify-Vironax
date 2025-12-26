@@ -1,0 +1,210 @@
+{% comment %}
+  VironaX Subcategory Row
+  Small square stone images for ring subcategories
+  OTTASILVER-inspired styling
+{% endcomment %}
+
+<div class="vironax-subcategories">
+  <div class="vironax-subcategories__row">
+    {% for block in section.blocks %}
+      <a href="{{ block.settings.link }}" class="vironax-subcategories__item">
+        <div class="vironax-subcategories__image-container">
+          {% if block.settings.image != blank %}
+            <img 
+              src="{{ block.settings.image | image_url: width: 200 }}" 
+              alt="{{ block.settings.title }}"
+              class="vironax-subcategories__image"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="vironax-subcategories__placeholder">
+              {{ block.settings.title | slice: 0 }}
+            </div>
+          {% endif %}
+        </div>
+        <span class="vironax-subcategories__title">{{ block.settings.title }}</span>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .vironax-subcategories {
+    padding: 60px 5%;
+    background-color: #FFFFFF;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .vironax-subcategories__row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .vironax-subcategories__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.3s ease;
+  }
+  
+  .vironax-subcategories__item:hover {
+    opacity: 0.7;
+  }
+  
+  .vironax-subcategories__image-container {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border: 1px solid #E5E5E5;
+    transition: border-color 0.3s ease;
+  }
+  
+  .vironax-subcategories__item:hover .vironax-subcategories__image-container {
+    border-color: #000000;
+  }
+  
+  .vironax-subcategories__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  
+  .vironax-subcategories__item:hover .vironax-subcategories__image {
+    transform: scale(1.1);
+  }
+  
+  .vironax-subcategories__placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .vironax-subcategories__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000000;
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 989px) {
+    .vironax-subcategories {
+      padding: 50px 4%;
+    }
+    
+    .vironax-subcategories__row {
+      gap: 30px;
+    }
+    
+    .vironax-subcategories__image-container {
+      width: 70px;
+      height: 70px;
+    }
+  }
+  
+  @media screen and (max-width: 749px) {
+    .vironax-subcategories__row {
+      gap: 20px;
+    }
+    
+    .vironax-subcategories__image-container {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .vironax-subcategories__title {
+      font-size: 10px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "VironaX Subcategory Row",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "subcategory",
+      "name": "Subcategory",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Stone Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Agate"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VironaX Subcategory Row",
+      "blocks": [
+        {
+          "type": "subcategory",
+          "settings": {
+            "title": "Agate"
+          }
+        },
+        {
+          "type": "subcategory",
+          "settings": {
+            "title": "Onyx"
+          }
+        },
+        {
+          "type": "subcategory",
+          "settings": {
+            "title": "Zircon"
+          }
+        },
+        {
+          "type": "subcategory",
+          "settings": {
+            "title": "Tiger Eye"
+          }
+        },
+        {
+          "type": "subcategory",
+          "settings": {
+            "title": "Fayrouz"
+          }
+        },
+        {
+          "type": "subcategory",
+          "settings": {
+            "title": "Engraved"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
