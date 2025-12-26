@@ -3241,7 +3241,11 @@ var QuickBuyModal = class extends Modal {
     const responseContent = await (await cachedFetch(`${window.Shopify.routes.root}products/${this.getAttribute("handle")}`)).text();
     document.documentElement.dispatchEvent(new CustomEvent("theme:loading:end", { bubbles: true }));
     const tempDoc = new DOMParser().parseFromString(responseContent, "text/html");
-    const quickBuyContent = tempDoc.getElementById("quick-buy-content").content;
+    const quickBuyTemplate = tempDoc.getElementById("quick-buy-content");
+    if (!quickBuyTemplate) {
+      return;
+    }
+    const quickBuyContent = document.importNode(quickBuyTemplate.content, true);
     Array.from(quickBuyContent.querySelectorAll("noscript")).forEach((noScript) => noScript.remove());
     this.replaceChildren(quickBuyContent);
     Shopify?.PaymentButton?.init();
