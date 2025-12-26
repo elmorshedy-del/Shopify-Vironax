@@ -2416,6 +2416,17 @@ model-media model-viewer, model-media .shopify-model-viewer-ui {
   display: grid;
 }
 
+@supports (-webkit-touch-callout: none) {
+  .quick-buy-modal__content {
+    display: block;
+  }
+
+  .quick-buy-modal__content > product-rerender {
+    grid-template-columns: minmax(0, 1fr);
+    display: grid;
+  }
+}
+
 .quick-buy-modal__close-button {
   position: absolute;
   inset-block-start: 1.875rem;
@@ -2482,6 +2493,19 @@ model-media model-viewer, model-media .shopify-model-viewer-ui {
     align-items: center;
     column-gap: 2.5rem;
     display: grid;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .quick-buy-modal__content {
+      display: block;
+    }
+
+    .quick-buy-modal__content > product-rerender {
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1fr);
+      align-items: center;
+      column-gap: 2.5rem;
+      display: grid;
+    }
   }
 
   .quick-buy-modal__content .product-info {
