@@ -2412,6 +2412,10 @@ model-media model-viewer, model-media .shopify-model-viewer-ui {
 }
 
 .quick-buy-modal__content {
+  display: block;
+}
+
+.quick-buy-modal__content > product-rerender {
   grid-template-columns: minmax(0, 1fr);
   display: grid;
 }
@@ -2478,6 +2482,10 @@ model-media model-viewer, model-media .shopify-model-viewer-ui {
   }
 
   .quick-buy-modal__content {
+    display: block;
+  }
+
+  .quick-buy-modal__content > product-rerender {
     grid-template-columns: minmax(0, .9fr) minmax(0, 1fr);
     align-items: center;
     column-gap: 2.5rem;
