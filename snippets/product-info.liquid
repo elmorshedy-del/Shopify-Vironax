@@ -17,7 +17,11 @@ Supported variables
 * context: the context of the product info. Can be "main_product", "featured_product" or "quick_buy"
 {%- endcomment -%}
 
-<safe-sticky class="product-info {% if center_basic_info %}product-info--center{% endif %}">
+{%- if context == 'quick_buy' -%}
+  <div class="product-info {% if center_basic_info %}product-info--center{% endif %}">
+{%- else -%}
+  <safe-sticky class="product-info {% if center_basic_info %}product-info--center{% endif %}">
+{%- endif -%}
   <div class="product-info__block-list">
     {%- liquid
       assign inside_block_group_context = false
@@ -568,4 +572,8 @@ Supported variables
       <input type="hidden" disabled name="id" value="{{ product.selected_or_first_available_variant.id }}">
     {%- endform -%}
   {%- endunless -%}
-</safe-sticky>
+{%- if context == 'quick_buy' -%}
+  </div>
+{%- else -%}
+  </safe-sticky>
+{%- endif -%}
