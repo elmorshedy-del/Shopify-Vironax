@@ -141,7 +141,15 @@
                           {%- for sub_link in link.links -%}
                             <li>
                               {%- if sub_link.levels == 0 -%}
-                                <a href="{{ sub_link.url }}" class="link-faded-reverse" {% if sub_link.current %}aria-current="page"{% endif %}>{{ sub_link.title }}</a>
+                                {%- capture sub_link_icon -%}
+                                  {%- if sub_link.type == 'product_link' and sub_link.object and sub_link.object.featured_image -%}
+                                    {{- sub_link.object.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', widths: '40,80', sizes: '40px', class: 'menu-product-icon', alt: sub_link.title -}}
+                                  {%- endif -%}
+                                {%- endcapture -%}
+                                <a href="{{ sub_link.url }}" class="link-faded-reverse" {% if sub_link.current %}aria-current="page"{% endif %}>
+                                  {{- sub_link_icon -}}
+                                  {{- sub_link.title -}}
+                                </a>
                               {%- else -%}
                                 <dropdown-menu-disclosure follow-summary-link trigger="{{ section.settings.menu_open_trigger }}" class="contents">
                                   <details class="header__menu-disclosure">
@@ -155,7 +163,15 @@
                                     <ul class="header__dropdown-menu unstyled-list" role="list">
                                       {%- for sub_sub_link in sub_link.links -%}
                                         <li>
-                                          <a href="{{ sub_sub_link.url }}" class="link-faded-reverse" {% if sub_sub_link.current %}aria-current="page"{% endif %}>{{ sub_sub_link.title }}</a>
+                                          {%- capture sub_sub_link_icon -%}
+                                            {%- if sub_sub_link.type == 'product_link' and sub_sub_link.object and sub_sub_link.object.featured_image -%}
+                                              {{- sub_sub_link.object.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', widths: '40,80', sizes: '40px', class: 'menu-product-icon', alt: sub_sub_link.title -}}
+                                            {%- endif -%}
+                                          {%- endcapture -%}
+                                          <a href="{{ sub_sub_link.url }}" class="link-faded-reverse" {% if sub_sub_link.current %}aria-current="page"{% endif %}>
+                                            {{- sub_sub_link_icon -}}
+                                            {{- sub_sub_link.title -}}
+                                          </a>
                                         </li>
                                       {%- endfor -%}
                                     </ul>
