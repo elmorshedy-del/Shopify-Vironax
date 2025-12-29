@@ -4852,6 +4852,9 @@ product-rerender {
   width: var(--header-logo-width);
   max-width: 100%;
   height: auto;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35)) drop-shadow(0 0 14px rgba(212, 175, 55, 0.35));
+  animation: virona-logo-glow 3s ease-in-out infinite;
+  will-change: filter;
 }
 
 .header__logo-image:where(:not(:only-of-type)) {
@@ -4865,6 +4868,22 @@ product-rerender {
   position: absolute;
   inset-block-start: 0;
   inset-inline-start: 0;
+}
+
+@keyframes virona-logo-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.25)) drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 18px rgba(212, 175, 55, 0.55));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header__logo-image {
+    animation: none;
+  }
 }
 
 .header__logo-text {
