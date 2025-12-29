@@ -4848,6 +4848,21 @@ product-rerender {
   position: relative;
 }
 
+.header__logo::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: -10%;
+  width: 120%;
+  height: 22%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(224, 224, 224, 0.9) 45%, rgba(255, 255, 255, 0.75) 55%, rgba(255, 255, 255, 0) 100%);
+  transform: translateY(-50%) rotate(-12deg);
+  pointer-events: none;
+  filter: blur(0.4px);
+  opacity: 0.7;
+  z-index: 1;
+}
+
 .header__logo-image {
   width: var(--header-logo-width);
   max-width: 100%;
@@ -4855,6 +4870,8 @@ product-rerender {
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35)) drop-shadow(0 0 14px rgba(212, 175, 55, 0.35));
   animation: virona-logo-glow 3s ease-in-out infinite;
   will-change: filter;
+  position: relative;
+  z-index: 2;
 }
 
 .header__logo-image:where(:not(:only-of-type)) {
