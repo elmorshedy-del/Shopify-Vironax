@@ -1,0 +1,13 @@
+{
+  "name": "shopify-vironax",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lightweight static server for the Shopify Vironax theme.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
