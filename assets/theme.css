@@ -4848,6 +4848,23 @@ product-rerender {
   position: relative;
 }
 
+.header__logo::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: -10%;
+  width: 120%;
+  height: 22%;
+  background: linear-gradient(90deg, rgba(207, 220, 230, 0) 0%, rgba(207, 220, 230, 0.15) 35%, rgba(230, 240, 247, 0.95) 50%, rgba(207, 220, 230, 0.25) 65%, rgba(207, 220, 230, 0) 100%);
+  transform: translateY(-50%) rotate(-10deg);
+  pointer-events: none;
+  filter: blur(0.2px);
+  opacity: 0.4;
+  z-index: 1;
+  mix-blend-mode: screen;
+  animation: virona-logo-ion 3.5s linear infinite;
+}
+
 .header__logo-image {
   width: var(--header-logo-width);
   max-width: 100%;
@@ -4855,6 +4872,8 @@ product-rerender {
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35)) drop-shadow(0 0 14px rgba(212, 175, 55, 0.35));
   animation: virona-logo-glow 3s ease-in-out infinite;
   will-change: filter;
+  position: relative;
+  z-index: 2;
 }
 
 .header__logo-image:where(:not(:only-of-type)) {
@@ -4880,8 +4899,29 @@ product-rerender {
   }
 }
 
+@keyframes virona-logo-ion {
+  0% {
+    transform: translate(-35%, -50%) rotate(-10deg);
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  55% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translate(35%, -50%) rotate(-10deg);
+    opacity: 0.2;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header__logo-image {
+    animation: none;
+  }
+
+  .header__logo::after {
     animation: none;
   }
 }
