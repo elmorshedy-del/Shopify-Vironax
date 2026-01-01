@@ -1,27 +1,68 @@
 {% comment %}
-  VironaX Trending Products
+  VironaX Trending Products - Enhanced Version
   Best sellers / trending products carousel
-  OTTASILVER-inspired styling
+  With universal padding/size/spacing controls
 {% endcomment %}
 
-<div class="vironax-trending">
+<style>
+  #shopify-section-{{ section.id }} {
+    --trending-padding-top: {{ section.settings.padding_top }}px;
+    --trending-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --trending-padding-left: {{ section.settings.padding_left }}px;
+    --trending-padding-right: {{ section.settings.padding_right }}px;
+    --trending-margin-top: {{ section.settings.margin_top }}px;
+    --trending-margin-bottom: {{ section.settings.margin_bottom }}px;
+    --trending-max-width: {{ section.settings.max_width }}px;
+    --trending-item-gap: {{ section.settings.item_gap }}px;
+    --trending-product-width: {{ section.settings.product_width }}px;
+    --trending-bg-color: {{ section.settings.background_color }};
+    --trending-text-color: {{ section.settings.text_color }};
+  }
+
+  @media screen and (max-width: 999px) {
+    #shopify-section-{{ section.id }} {
+      --trending-padding-top: {{ section.settings.padding_top_mobile }}px;
+      --trending-padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      --trending-padding-left: {{ section.settings.padding_left_mobile }}px;
+      --trending-padding-right: {{ section.settings.padding_right_mobile }}px;
+      --trending-product-width: {{ section.settings.product_width_tablet }}px;
+    }
+  }
+
+  @media screen and (max-width: 699px) {
+    #shopify-section-{{ section.id }} {
+      --trending-product-width: {{ section.settings.product_width_mobile }}px;
+    }
+  }
+</style>
+
+<div class="vironax-trending" style="
+  padding: var(--trending-padding-top) var(--trending-padding-right) var(--trending-padding-bottom) var(--trending-padding-left);
+  margin-top: var(--trending-margin-top);
+  margin-bottom: var(--trending-margin-bottom);
+  max-width: var(--trending-max-width);
+  background-color: var(--trending-bg-color);
+  color: var(--trending-text-color);
+">
   <div class="vironax-trending__header">
     <h2 class="vironax-trending__title">{{ section.settings.title }}</h2>
-    <a href="{{ section.settings.view_all_link }}" class="vironax-trending__view-all">
-      View All
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </a>
+    {% if section.settings.view_all_link != blank %}
+      <a href="{{ section.settings.view_all_link }}" class="vironax-trending__view-all">
+        {{ section.settings.view_all_text }}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    {% endif %}
   </div>
-  
+
   <div class="vironax-trending__carousel-container">
     <button class="vironax-trending__nav vironax-trending__nav--prev" aria-label="Previous">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M15 18l-6-6 6-6"/>
       </svg>
     </button>
-    
+
     <div class="vironax-trending__carousel">
       <div class="vironax-trending__track">
         {% for product in collections[section.settings.collection].products limit: section.settings.products_limit %}
@@ -29,15 +70,15 @@
             <a href="{{ product.url }}" class="vironax-trending__product-link">
               <div class="vironax-trending__image-container">
                 {% if product.featured_image %}
-                  <img 
-                    src="{{ product.featured_image | image_url: width: 400 }}" 
+                  <img
+                    src="{{ product.featured_image | image_url: width: 400 }}"
                     alt="{{ product.title }}"
                     class="vironax-trending__product-image"
                     loading="lazy"
                   >
                   {% if product.images[1] %}
-                    <img 
-                      src="{{ product.images[1] | image_url: width: 400 }}" 
+                    <img
+                      src="{{ product.images[1] | image_url: width: 400 }}"
                       alt="{{ product.title }}"
                       class="vironax-trending__product-image vironax-trending__product-image--hover"
                       loading="lazy"
@@ -48,29 +89,31 @@
                     {{ product.title | slice: 0 }}
                   </div>
                 {% endif %}
-                
+
                 {% if product.available == false %}
-                  <span class="vironax-trending__badge vironax-trending__badge--soldout">Sold Out</span>
+                  <span class="vironax-trending__badge vironax-trending__badge--soldout">{{ section.settings.sold_out_text }}</span>
                 {% elsif product.compare_at_price > product.price %}
-                  <span class="vironax-trending__badge vironax-trending__badge--sale">Sale</span>
+                  <span class="vironax-trending__badge vironax-trending__badge--sale">{{ section.settings.sale_text }}</span>
                 {% elsif product.tags contains 'bestseller' or product.tags contains 'best-seller' %}
-                  <span class="vironax-trending__badge vironax-trending__badge--bestseller">Best Seller</span>
+                  <span class="vironax-trending__badge vironax-trending__badge--bestseller">{{ section.settings.bestseller_text }}</span>
                 {% elsif product.tags contains 'new' %}
-                  <span class="vironax-trending__badge vironax-trending__badge--new">New</span>
+                  <span class="vironax-trending__badge vironax-trending__badge--new">{{ section.settings.new_text }}</span>
                 {% endif %}
               </div>
-              
+
               <div class="vironax-trending__product-info">
                 <h3 class="vironax-trending__product-title">{{ product.title }}</h3>
-                
-                <div class="vironax-trending__product-rating">
-                  {% for i in (1..5) %}
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                    </svg>
-                  {% endfor %}
-                </div>
-                
+
+                {% if section.settings.show_rating %}
+                  <div class="vironax-trending__product-rating">
+                    {% for i in (1..5) %}
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                      </svg>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
                 <div class="vironax-trending__product-price">
                   {% if product.compare_at_price > product.price %}
                     <span class="vironax-trending__price--compare">{{ product.compare_at_price | money }}</span>
@@ -107,7 +150,7 @@
         {% endfor %}
       </div>
     </div>
-    
+
     <button class="vironax-trending__nav vironax-trending__nav--next" aria-label="Next">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M9 18l6-6-6-6"/>
@@ -118,39 +161,37 @@
 
 <style>
   .vironax-trending {
-    padding: var(--vironax-section-padding) var(--vironax-section-gutter);
-    background-color: rgb(var(--background));
-    max-width: var(--vironax-container-max-width);
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .vironax-trending__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--vironax-gap-lg);
+    margin-bottom: 24px;
   }
 
   .vironax-trending__title {
     font-family: var(--heading-font-family);
-    font-size: var(--text-h5);
+    font-size: {{ section.settings.title_size }}px;
     font-weight: var(--heading-font-weight);
     text-transform: var(--heading-text-transform);
     letter-spacing: var(--heading-letter-spacing);
-    color: rgb(var(--text-color));
+    color: inherit;
     margin: 0;
   }
 
   .vironax-trending__view-all {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: 6px;
     font-family: var(--text-font-family);
-    font-size: var(--text-sm);
+    font-size: 13px;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: var(--text-letter-spacing);
-    color: rgb(var(--text-color));
+    letter-spacing: 0.05em;
+    color: inherit;
     text-decoration: none;
     transition: opacity 0.3s ease;
   }
@@ -163,7 +204,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: 16px;
   }
 
   .vironax-trending__carousel {
@@ -173,40 +214,37 @@
 
   .vironax-trending__track {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--trending-item-gap);
     transition: transform 0.5s ease;
   }
 
   .vironax-trending__nav {
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border: 2px solid rgb(var(--text-color));
-    background: rgb(var(--background));
+    width: {{ section.settings.nav_button_size }}px;
+    height: {{ section.settings.nav_button_size }}px;
+    border: 2px solid currentColor;
+    background: transparent;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    color: inherit;
   }
 
   .vironax-trending__nav:hover {
-    background: rgb(var(--text-color));
-    color: rgb(var(--background));
+    background: var(--trending-text-color, #000000);
+    color: var(--trending-bg-color, #FFFFFF);
   }
 
   .vironax-trending__nav svg {
-    stroke: rgb(var(--text-color));
+    stroke: currentColor;
     transition: stroke 0.3s ease;
   }
 
-  .vironax-trending__nav:hover svg {
-    stroke: rgb(var(--background));
-  }
-
   .vironax-trending__product {
-    flex: 0 0 calc(25% - 18px);
-    min-width: 220px;
+    flex: 0 0 var(--trending-product-width);
+    min-width: var(--trending-product-width);
   }
 
   .vironax-trending__product-link {
@@ -219,7 +257,7 @@
     position: relative;
     aspect-ratio: 1;
     overflow: hidden;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 12px;
     background-color: #F5F5F5;
   }
 
@@ -250,40 +288,36 @@
     justify-content: center;
     color: #666666;
     font-family: var(--heading-font-family);
-    font-size: var(--text-xl);
+    font-size: 24px;
     font-weight: 600;
   }
 
   .vironax-trending__badge {
     position: absolute;
-    top: var(--spacing-sm);
-    left: var(--spacing-sm);
-    padding: var(--spacing-xs) var(--spacing-sm);
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
     font-family: var(--text-font-family);
-    font-size: var(--text-xs);
+    font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: var(--text-letter-spacing);
+    letter-spacing: 0.05em;
   }
 
-  .vironax-trending__badge--bestseller {
-    background-color: rgb(var(--text-color));
-    color: rgb(var(--background));
-  }
-
+  .vironax-trending__badge--bestseller,
   .vironax-trending__badge--new {
-    background-color: rgb(var(--text-color));
-    color: rgb(var(--background));
+    background-color: #000000;
+    color: #FFFFFF;
   }
 
   .vironax-trending__badge--sale {
-    background-color: rgb(var(--on-sale-badge-background));
-    color: rgb(var(--on-sale-badge-text));
+    background-color: {{ section.settings.sale_badge_color }};
+    color: #FFFFFF;
   }
 
   .vironax-trending__badge--soldout {
-    background-color: rgb(var(--sold-out-badge-background));
-    color: rgb(var(--sold-out-badge-text));
+    background-color: #999999;
+    color: #FFFFFF;
   }
 
   .vironax-trending__product-info {
@@ -292,10 +326,10 @@
 
   .vironax-trending__product-title {
     font-family: var(--text-font-family);
-    font-size: var(--text-sm);
+    font-size: 14px;
     font-weight: 500;
-    color: rgb(var(--text-color));
-    margin: 0 0 var(--spacing-xs) 0;
+    color: inherit;
+    margin: 0 0 6px 0;
     line-height: 1.4;
   }
 
@@ -303,37 +337,33 @@
     display: flex;
     justify-content: center;
     gap: 2px;
-    margin-bottom: var(--spacing-xs);
-    color: rgb(var(--star-color));
+    margin-bottom: 6px;
+    color: {{ section.settings.star_color }};
   }
 
   .vironax-trending__product-price {
     display: flex;
     justify-content: center;
-    gap: var(--spacing-xs);
+    gap: 8px;
     align-items: center;
   }
 
   .vironax-trending__price--compare {
     font-family: var(--text-font-family);
-    font-size: var(--text-sm);
-    color: rgb(var(--text-color) / 0.5);
+    font-size: 13px;
+    color: inherit;
+    opacity: 0.5;
     text-decoration: line-through;
   }
 
   .vironax-trending__price--current {
     font-family: var(--text-font-family);
-    font-size: var(--text-base);
+    font-size: 15px;
     font-weight: 600;
-    color: rgb(var(--text-color));
+    color: inherit;
   }
 
   @media screen and (max-width: 999px) {
-    .vironax-trending__product {
-      flex: 0 0 calc(33.333% - 16px);
-      min-width: 180px;
-    }
-
     .vironax-trending__nav {
       display: none;
     }
@@ -357,32 +387,31 @@
   @media screen and (max-width: 699px) {
     .vironax-trending__header {
       flex-direction: column;
-      gap: var(--spacing-sm);
+      gap: 12px;
       text-align: center;
     }
 
-    .vironax-trending__product {
-      flex: 0 0 calc(50% - 12px);
-      min-width: 150px;
+    .vironax-trending__title {
+      font-size: {{ section.settings.title_size_mobile }}px;
     }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const container = document.querySelector('.vironax-trending__carousel');
-    const track = document.querySelector('.vironax-trending__track');
-    const prevBtn = document.querySelector('.vironax-trending__nav--prev');
-    const nextBtn = document.querySelector('.vironax-trending__nav--next');
-    
+    const container = document.querySelector('#shopify-section-{{ section.id }} .vironax-trending__carousel');
+    const track = document.querySelector('#shopify-section-{{ section.id }} .vironax-trending__track');
+    const prevBtn = document.querySelector('#shopify-section-{{ section.id }} .vironax-trending__nav--prev');
+    const nextBtn = document.querySelector('#shopify-section-{{ section.id }} .vironax-trending__nav--next');
+
     if (!container || !track || !prevBtn || !nextBtn) return;
-    
+
     const scrollAmount = 300;
-    
+
     prevBtn.addEventListener('click', function() {
       container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     });
-    
+
     nextBtn.addEventListener('click', function() {
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     });
@@ -393,6 +422,10 @@
 {
   "name": "VironaX Trending Products",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
     {
       "type": "text",
       "id": "title",
@@ -417,6 +450,278 @@
       "type": "url",
       "id": "view_all_link",
       "label": "View All Link"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Text",
+      "default": "View All"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Star Rating",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Badge Text (Translatable)"
+    },
+    {
+      "type": "text",
+      "id": "sale_text",
+      "label": "Sale Badge Text",
+      "default": "Sale"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Sold Out Badge Text",
+      "default": "Sold Out"
+    },
+    {
+      "type": "text",
+      "id": "bestseller_text",
+      "label": "Bestseller Badge Text",
+      "default": "Best Seller"
+    },
+    {
+      "type": "text",
+      "id": "new_text",
+      "label": "New Badge Text",
+      "default": "New"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Rating Color",
+      "default": "#FFD700"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_color",
+      "label": "Sale Badge Color",
+      "default": "#CC0000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Size (Desktop)",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Title Size (Mobile)",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Product Card Size"
+    },
+    {
+      "type": "range",
+      "id": "product_width",
+      "label": "Product Width (Desktop)",
+      "min": 180,
+      "max": 350,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "product_width_tablet",
+      "label": "Product Width (Tablet)",
+      "min": 150,
+      "max": 280,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "product_width_mobile",
+      "label": "Product Width (Mobile)",
+      "min": 120,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap Between Products",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "nav_button_size",
+      "label": "Navigation Button Size",
+      "min": 32,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Section Width"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum Width",
+      "min": 800,
+      "max": 1800,
+      "step": 50,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Padding (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding Left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding Right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Padding (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "Padding Left (Mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "Padding Right (Mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Margin (Spacing)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
     }
   ],
   "presets": [

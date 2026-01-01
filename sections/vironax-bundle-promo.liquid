@@ -1,31 +1,83 @@
 {% comment %}
-  VironaX Bundle Promo
+  VironaX Bundle Promo - Enhanced Version
   Shop bundle promo banner - 20% OFF
-  OTTASILVER-inspired styling
+  With universal padding/size/spacing controls
 {% endcomment %}
 
-<div class="vironax-bundle">
-  <div class="vironax-bundle__container">
-    <div class="vironax-bundle__content">
-      <span class="vironax-bundle__label">{{ section.settings.label }}</span>
-      <h2 class="vironax-bundle__headline">{{ section.settings.headline }}</h2>
-      <p class="vironax-bundle__description">{{ section.settings.description }}</p>
-      <a href="{{ section.settings.button_link }}" class="vironax-bundle__button">
-        {{ section.settings.button_text }}
-      </a>
+<style>
+  #shopify-section-{{ section.id }} {
+    --bundle-padding-top: {{ section.settings.padding_top }}px;
+    --bundle-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --bundle-padding-left: {{ section.settings.padding_left }}px;
+    --bundle-padding-right: {{ section.settings.padding_right }}px;
+    --bundle-margin-top: {{ section.settings.margin_top }}px;
+    --bundle-margin-bottom: {{ section.settings.margin_bottom }}px;
+    --bundle-max-width: {{ section.settings.max_width }}px;
+    --bundle-content-padding: {{ section.settings.content_padding }}px;
+    --bundle-bg-color: {{ section.settings.section_background_color }};
+    --bundle-container-bg: {{ section.settings.container_background_color }};
+    --bundle-text-color: {{ section.settings.text_color }};
+    --bundle-button-bg: {{ section.settings.button_background_color }};
+    --bundle-button-text: {{ section.settings.button_text_color }};
+    --bundle-min-height: {{ section.settings.min_height }}px;
+  }
+
+  @media screen and (max-width: 999px) {
+    #shopify-section-{{ section.id }} {
+      --bundle-padding-top: {{ section.settings.padding_top_mobile }}px;
+      --bundle-padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      --bundle-padding-left: {{ section.settings.padding_left_mobile }}px;
+      --bundle-padding-right: {{ section.settings.padding_right_mobile }}px;
+      --bundle-content-padding: {{ section.settings.content_padding_mobile }}px;
+      --bundle-min-height: {{ section.settings.min_height_mobile }}px;
+    }
+  }
+</style>
+
+<div class="vironax-bundle" style="
+  padding: var(--bundle-padding-top) var(--bundle-padding-right) var(--bundle-padding-bottom) var(--bundle-padding-left);
+  margin-top: var(--bundle-margin-top);
+  margin-bottom: var(--bundle-margin-bottom);
+  max-width: var(--bundle-max-width);
+  background-color: var(--bundle-bg-color);
+">
+  <div class="vironax-bundle__container" style="background-color: var(--bundle-container-bg);">
+    <div class="vironax-bundle__content" style="
+      padding: var(--bundle-content-padding);
+      color: var(--bundle-text-color);
+    ">
+      {% if section.settings.label != blank %}
+        <span class="vironax-bundle__label">{{ section.settings.label }}</span>
+      {% endif %}
+      <h2 class="vironax-bundle__headline" style="font-size: {{ section.settings.headline_size }}px;">
+        {{ section.settings.headline }}
+      </h2>
+      {% if section.settings.description != blank %}
+        <p class="vironax-bundle__description">{{ section.settings.description }}</p>
+      {% endif %}
+      {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="vironax-bundle__button" style="
+          background-color: var(--bundle-button-bg);
+          color: var(--bundle-button-text);
+          border-color: var(--bundle-button-bg);
+        ">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
     </div>
-    
+
     <div class="vironax-bundle__image-container">
       {% if section.settings.image != blank %}
-        <img 
-          src="{{ section.settings.image | image_url: width: 800 }}" 
+        <img
+          src="{{ section.settings.image | image_url: width: 800 }}"
           alt="{{ section.settings.headline }}"
           class="vironax-bundle__image"
           loading="lazy"
+          style="min-height: var(--bundle-min-height); object-position: {{ section.settings.image_position }};"
         >
       {% else %}
-        <div class="vironax-bundle__placeholder">
-          <span>Add Bundle Image</span>
+        <div class="vironax-bundle__placeholder" style="min-height: var(--bundle-min-height);">
+          <span>{{ section.settings.placeholder_text }}</span>
         </div>
       {% endif %}
     </div>
@@ -34,16 +86,13 @@
 
 <style>
   .vironax-bundle {
-    padding: 0 var(--vironax-section-gutter);
-    background-color: rgb(var(--background));
-    max-width: var(--vironax-container-max-width);
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .vironax-bundle__container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    background-color: #F8F8F8;
+    grid-template-columns: {{ section.settings.content_width }}% {{ section.settings.image_width }}%;
     overflow: hidden;
   }
 
@@ -51,55 +100,54 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: var(--spacing-3xl);
   }
 
   .vironax-bundle__label {
     font-family: var(--text-font-family);
-    font-size: var(--text-xs);
+    font-size: {{ section.settings.label_size }}px;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: var(--heading-letter-spacing);
-    color: rgb(var(--text-color) / 0.6);
-    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 12px;
   }
 
   .vironax-bundle__headline {
     font-family: var(--heading-font-family);
-    font-size: var(--text-h1);
     font-weight: var(--heading-font-weight);
     text-transform: var(--heading-text-transform);
     letter-spacing: var(--heading-letter-spacing);
-    color: rgb(var(--text-color));
-    margin: 0 0 var(--spacing-lg) 0;
+    color: inherit;
+    margin: 0 0 16px 0;
     line-height: 1.1;
   }
 
   .vironax-bundle__description {
     font-family: var(--text-font-family);
-    font-size: var(--text-base);
+    font-size: {{ section.settings.description_size }}px;
     font-weight: 400;
-    color: rgb(var(--text-color) / 0.8);
+    opacity: 0.8;
     line-height: 1.6;
-    margin: 0 0 var(--spacing-lg) 0;
+    margin: 0 0 24px 0;
   }
 
   .vironax-bundle__button {
     display: inline-block;
     align-self: flex-start;
-    font: var(--button-font);
-    text-transform: var(--button-text-transform);
-    letter-spacing: var(--button-letter-spacing);
-    color: rgb(var(--button-text-color));
-    background-color: rgb(var(--button-background));
-    padding: var(--spacing-sm) var(--spacing-xl);
+    font-family: var(--text-font-family);
+    font-size: {{ section.settings.button_font_size }}px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
     text-decoration: none;
-    transition: opacity 0.3s ease;
-    border-radius: var(--button-border-radius);
+    transition: all 0.3s ease;
+    border: 2px solid;
   }
 
   .vironax-bundle__button:hover {
     opacity: 0.8;
+    transform: translateY(-2px);
   }
 
   .vironax-bundle__image-container {
@@ -111,22 +159,20 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    min-height: 400px;
   }
 
   .vironax-bundle__placeholder {
     width: 100%;
     height: 100%;
-    min-height: 400px;
     background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #666666;
     font-family: var(--heading-font-family);
-    font-size: var(--text-base);
+    font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: var(--heading-letter-spacing);
+    letter-spacing: 0.1em;
   }
 
   @media screen and (max-width: 999px) {
@@ -135,7 +181,6 @@
     }
 
     .vironax-bundle__content {
-      padding: var(--spacing-xl);
       order: 2;
     }
 
@@ -143,15 +188,13 @@
       order: 1;
     }
 
-    .vironax-bundle__image,
-    .vironax-bundle__placeholder {
-      min-height: 300px;
+    .vironax-bundle__headline {
+      font-size: {{ section.settings.headline_size_mobile }}px !important;
     }
   }
 
   @media screen and (max-width: 699px) {
     .vironax-bundle__content {
-      padding: var(--spacing-lg) var(--spacing-md);
       text-align: center;
     }
 
@@ -165,6 +208,10 @@
 {
   "name": "VironaX Bundle Promo",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "label",
@@ -199,6 +246,329 @@
       "id": "image",
       "label": "Bundle Image",
       "info": "Show ring + beads together"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        { "value": "center top", "label": "Top" },
+        { "value": "center center", "label": "Center" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Placeholder Text",
+      "default": "Add Bundle Image"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Section Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "container_background_color",
+      "label": "Container Background",
+      "default": "#F8F8F8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label Size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "label": "Headline Size (Desktop)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "headline_size_mobile",
+      "label": "Headline Size (Mobile)",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description Size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Button Styling"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button Font Size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x",
+      "label": "Button Horizontal Padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y",
+      "label": "Button Vertical Padding",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Width %",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image Width %",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum Height (Desktop)",
+      "min": 300,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Minimum Height (Mobile)",
+      "min": 200,
+      "max": 400,
+      "step": 20,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "header",
+      "content": "Section Width"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum Width",
+      "min": 800,
+      "max": 1800,
+      "step": 50,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Content Padding"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content Padding (Desktop)",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "content_padding_mobile",
+      "label": "Content Padding (Mobile)",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Section Padding (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding Left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding Right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Section Padding (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "label": "Padding Left (Mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "label": "Padding Right (Mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Margin (Spacing)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
     }
   ],
   "presets": [
