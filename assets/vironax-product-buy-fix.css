@@ -1,0 +1,249 @@
+/**
+ * VironaX Product Buy Section Fix
+ * Removes black background boxes and applies white aesthetic
+ * Clean, minimal button styling
+ */
+
+/* === MAIN PRODUCT BUY SECTION === */
+
+/* Remove all dark backgrounds from product form area */
+.product-info,
+.product-form,
+.product-form__controls,
+.product-form__actions,
+.product__info-container,
+.product__buy-section,
+.buy-buttons,
+.product-form__buttons,
+.payment-terms,
+.shopify-payment-button,
+.shopify-payment-button__button--unbranded,
+.product-form__submit,
+[data-product-form],
+.product__content {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+}
+
+/* Ring size selector area - white background */
+.variant-picker,
+.variant-picker__wrapper,
+.variant-picker__option,
+.variant-radios,
+.product-form__input,
+.product-option,
+.product-variant-picker {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+}
+
+/* Size Chart Button - Outline style on white */
+.size-chart-button,
+.size-chart-link,
+.size-guide-button,
+[class*="size-chart"],
+[class*="size-guide"],
+button[aria-label*="Size"],
+button[aria-label*="size"],
+a[href*="size-chart"],
+a[href*="size-guide"] {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #000000 !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+.size-chart-button:hover,
+.size-chart-link:hover,
+.size-guide-button:hover,
+[class*="size-chart"]:hover,
+[class*="size-guide"]:hover {
+  background-color: #F5F5F5 !important;
+}
+
+/* ADD TO CART Button - Outline style on white */
+.product-form__submit,
+.add-to-cart-button,
+.btn--add-to-cart,
+button[name="add"],
+.product-form__cart-submit,
+.product__submit__add,
+[class*="add-to-cart"],
+.shopify-payment-button__button--unbranded {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #000000 !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.product-form__submit:hover,
+.add-to-cart-button:hover,
+.btn--add-to-cart:hover,
+button[name="add"]:hover,
+.product-form__cart-submit:hover,
+.product__submit__add:hover,
+[class*="add-to-cart"]:hover,
+.shopify-payment-button__button--unbranded:hover {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+/* Shop Pay Button - Keep original purple styling */
+.shopify-payment-button__button--branded,
+.shopify-payment-button [role="button"]:not(.shopify-payment-button__button--unbranded),
+.shop-pay-button,
+[class*="shop-pay"],
+.dynamic-checkout-button {
+  /* Keep original Shop Pay styling */
+  box-shadow: none !important;
+}
+
+/* Remove black box around Shop Pay container */
+.shopify-payment-button,
+.dynamic-checkout-buttons,
+.product-form__checkout,
+.payment-buttons,
+.additional-checkout-buttons {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* MORE PAYMENT OPTIONS Link - Simple underlined text */
+.payment-terms__content,
+.payment-terms,
+.shopify-payment-button__more-options,
+.more-payment-options,
+[class*="more-payment"],
+a[href*="checkout"] {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.shopify-payment-button__more-options,
+.more-payment-options {
+  color: #000000 !important;
+  text-decoration: underline !important;
+  border: none !important;
+  padding: 10px 0 !important;
+  font-size: 13px !important;
+}
+
+.shopify-payment-button__more-options:hover,
+.more-payment-options:hover {
+  color: #333333 !important;
+}
+
+/* Quantity selector */
+.quantity-selector,
+.quantity__wrapper,
+.product-form__quantity,
+.quantity,
+.quantity-input,
+.quantity__button {
+  background-color: #FFFFFF !important;
+  border-color: #E5E5E5 !important;
+}
+
+/* Product form wrapper */
+.product-form__input-wrapper,
+.product-form__variants,
+.product-form__options {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+}
+
+/* Remove any remaining black boxes */
+.product-form__controls-group,
+.product-info__block,
+.product__blocks,
+.product-block {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Product info wrapper */
+.product__column-sticky,
+.product__info-wrapper,
+.product__details {
+  background-color: #FFFFFF !important;
+}
+
+/* Clean up any box shadows */
+.product-form *,
+.product-info *,
+.buy-buttons * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* === PRESTIGE THEME SPECIFIC OVERRIDES === */
+
+/* Prestige theme product form */
+.product-item__info,
+.product__info {
+  background-color: #FFFFFF !important;
+}
+
+/* Prestige buttons */
+.button--primary.product-form__add-button,
+.button--primary.product-form__cart-submit {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #000000 !important;
+  color: #000000 !important;
+}
+
+.button--primary.product-form__add-button:hover,
+.button--primary.product-form__cart-submit:hover {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+/* Ensure color scheme doesn't override */
+.product-form [class*="color-scheme"],
+.product-info [class*="color-scheme"] {
+  --background: 255 255 255 !important;
+}
+
+/* === MOBILE RESPONSIVE === */
+@media screen and (max-width: 699px) {
+  .product-form__submit,
+  .add-to-cart-button {
+    padding: 14px 24px !important;
+    font-size: 13px !important;
+  }
+
+  .shopify-payment-button__more-options {
+    font-size: 12px !important;
+  }
+}
+
+/* === ENSURE NO BLACK BACKGROUNDS ANYWHERE === */
+.product-form,
+.product-form > *,
+.product-form > * > *,
+.product-info,
+.product-info > *,
+.product-info > * > * {
+  background-color: #FFFFFF;
+  background: #FFFFFF;
+}
+
+/* Final override for any stubborn elements */
+[style*="background-color: #000"],
+[style*="background: #000"],
+[style*="background-color: black"],
+[style*="background: black"],
+[style*="background-color: rgb(0"],
+[style*="background: rgb(0"] {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+}

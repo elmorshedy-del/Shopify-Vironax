@@ -8,35 +8,72 @@
       {%- endif -%}
     }
 
-    {%- if section.settings.enable_sticky -%}
-      #shopify-section-{{ section.id }} {
-        position: sticky;
-        top: 0;
-        z-index: 5;
-      }
-
-      .shopify-section--header ~ #shopify-section-{{ section.id }} {
-        top: calc(var(--header-is-sticky, 0) * var(--header-height, 0px));
-        z-index: 4; /* We have to lower the z-index in case the announcement bar is displayed after the header */
-      }
-    {%- endif -%}
-
     #shopify-section-{{ section.id }} {
       --announcement-bar-font-size: {{ section.settings.mobile_font_size | divided_by: 16.0 }}rem;
+      --announcement-bar-padding-top: {{ section.settings.padding_top_mobile }}px;
+      --announcement-bar-padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      --announcement-bar-padding-left: {{ section.settings.padding_left }}px;
+      --announcement-bar-padding-right: {{ section.settings.padding_right }}px;
     }
 
     @media screen and (min-width: 999px) {
       #shopify-section-{{ section.id }} {
         --announcement-bar-font-size: {{ section.settings.desktop_font_size | divided_by: 16.0 }}rem;
+        --announcement-bar-padding-top: {{ section.settings.padding_top }}px;
+        --announcement-bar-padding-bottom: {{ section.settings.padding_bottom }}px;
       }
     }
+
+    {%- if section.settings.enable_sticky -%}
+      #shopify-section-{{ section.id }} {
+        position: sticky;
+        top: 0;
+        z-index: {{ section.settings.z_index | default: 1003 }};
+      }
+
+      #shopify-section-{{ section.id }}[data-sticky="true"] {
+        position: sticky;
+        top: 0;
+      }
+
+      .shopify-section--header ~ #shopify-section-{{ section.id }} {
+        top: calc(var(--header-is-sticky, 0) * var(--header-height, 0px));
+        z-index: {{ section.settings.z_index | default: 1003 | minus: 1 }};
+      }
+    {%- endif -%}
+
+    /* VironaX Enhanced Announcement Bar Styling */
+    #shopify-section-{{ section.id }} .announcement-bar {
+      padding-top: var(--announcement-bar-padding-top);
+      padding-bottom: var(--announcement-bar-padding-bottom);
+      padding-left: var(--announcement-bar-padding-left);
+      padding-right: var(--announcement-bar-padding-right);
+      font-family: {{ section.settings.font_family | default: "'Montserrat', sans-serif" }};
+      letter-spacing: {{ section.settings.letter_spacing | default: 0.08 }}em;
+      text-transform: {{ section.settings.text_transform | default: 'uppercase' }};
+    }
+
+    #shopify-section-{{ section.id }} .announcement-bar__carousel {
+      font-weight: {{ section.settings.font_weight | default: 500 }};
+    }
+
+    /* Static positioning - no auto-rotate animation */
+    {%- if section.settings.disable_rotation -%}
+      #shopify-section-{{ section.id }} .announcement-bar__carousel {
+        animation: none !important;
+      }
+    {%- endif -%}
   </style>
 
   <height-observer variable="announcement-bar">
-    <div class="announcement-bar color-scheme color-scheme--{{ section.settings.color_scheme.id }}">
+    <div
+      class="announcement-bar color-scheme color-scheme--{{ section.settings.color_scheme.id }}"
+      data-sticky="{{ section.settings.enable_sticky }}"
+      data-position="{{ section.settings.sticky_position | default: 'top' }}"
+    >
       {%- assign carousel_id = 'carousel-' | append: section.id -%}
 
-      {%- if section.blocks.size > 1 -%}
+      {%- if section.blocks.size > 1 and section.settings.disable_rotation == false -%}
         <carousel-prev-button aria-controls="{{ carousel_id }}" class="contents">
           <button type="button" class="tap-area">
             <span class="sr-only">{{ 'general.accessibility.previous' | t }}</span>
@@ -45,13 +82,18 @@
         </carousel-prev-button>
       {%- endif -%}
 
-      <announcement-bar-carousel allow-swipe {% if section.settings.autoplay %}autoplay="{{ section.settings.cycle_speed }}"{% endif %} id="{{ carousel_id }}" class="announcement-bar__carousel">
+      <announcement-bar-carousel
+        allow-swipe
+        {% if section.settings.autoplay and section.settings.disable_rotation == false %}autoplay="{{ section.settings.cycle_speed }}"{% endif %}
+        id="{{ carousel_id }}"
+        class="announcement-bar__carousel"
+      >
         {%- for block in section.blocks -%}
           <p class="prose heading {% if forloop.first %}is-selected{% endif %}" {{ block.shopify_attributes }}>{{- block.settings.text -}}</p>
         {%- endfor -%}
       </announcement-bar-carousel>
 
-      {%- if section.blocks.size > 1 -%}
+      {%- if section.blocks.size > 1 and section.settings.disable_rotation == false -%}
         <carousel-next-button aria-controls="{{ carousel_id }}" class="contents">
           <button type="button" class="tap-area">
             <span class="sr-only">{{ 'general.accessibility.next' | t }}</span>
@@ -95,9 +137,46 @@
       "default": "scheme-3"
     },
     {
+      "type": "header",
+      "content": "Sticky Position Settings"
+    },
+    {
       "type": "checkbox",
       "id": "enable_sticky",
-      "label": "t:sections.announcement_bar.enable_sticky_bar"
+      "label": "Enable sticky announcement bar",
+      "info": "When enabled, the announcement bar stays at the top when scrolling",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "sticky_position",
+      "label": "Sticky position",
+      "options": [
+        { "value": "top", "label": "Top of page" },
+        { "value": "bottom", "label": "Bottom of page" }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "range",
+      "id": "z_index",
+      "label": "Z-index (stacking order)",
+      "min": 1,
+      "max": 9999,
+      "step": 1,
+      "default": 1003,
+      "info": "Higher values appear above other elements"
+    },
+    {
+      "type": "header",
+      "content": "Rotation Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_rotation",
+      "label": "Disable auto-rotation (static)",
+      "info": "When enabled, messages do NOT auto-rotate - only first message shows",
+      "default": false
     },
     {
       "type": "checkbox",
@@ -116,22 +195,147 @@
       "default": 5
     },
     {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
       "type": "range",
       "id": "desktop_font_size",
       "min": 9,
-      "max": 15,
+      "max": 18,
       "unit": "px",
-      "label": "t:sections.announcement_bar.desktop_text_size",
+      "label": "Desktop text size",
       "default": 11
     },
     {
       "type": "range",
       "id": "mobile_font_size",
       "min": 9,
-      "max": 15,
+      "max": 16,
       "unit": "px",
-      "label": "t:sections.announcement_bar.mobile_text_size",
+      "label": "Mobile text size",
       "default": 10
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": 0,
+      "max": 0.3,
+      "step": 0.01,
+      "label": "Letter spacing (em)",
+      "default": 0.08
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
     }
   ]
 }
