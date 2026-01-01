@@ -1,20 +1,72 @@
 {% comment %}
-  VironaX Hero Carousel
-  Multiple slides with 4-second autoplay
+  VironaX Hero Carousel - Enhanced Version
+  Multiple slides with autoplay
   Left-aligned text, lighter overlay
+  Mobile optimization and comprehensive admin controls
 {% endcomment %}
 
-<div class="vironax-hero">
+{%- comment -%}Set up CSS custom properties from settings{%- endcomment -%}
+<style>
+  #shopify-section-{{ section.id }} {
+    --hero-desktop-height: {{ section.settings.desktop_height }}{{ section.settings.desktop_height_unit }};
+    --hero-mobile-height: {{ section.settings.mobile_height }}{{ section.settings.mobile_height_unit }};
+    --hero-max-width: {{ section.settings.max_width }}px;
+    --hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --hero-padding-top: {{ section.settings.padding_top }}px;
+    --hero-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hero-padding-left: {{ section.settings.padding_left }}px;
+    --hero-padding-right: {{ section.settings.padding_right }}px;
+    --hero-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --hero-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --hero-margin-top: {{ section.settings.margin_top }}px;
+    --hero-margin-bottom: {{ section.settings.margin_bottom }}px;
+    --hero-object-position: {{ section.settings.image_position }};
+    --hero-object-fit: {{ section.settings.object_fit }};
+  }
+</style>
+
+<div
+  class="vironax-hero"
+  style="
+    margin-top: var(--hero-margin-top);
+    margin-bottom: var(--hero-margin-bottom);
+    {% if section.settings.full_width %}max-width: 100%;{% else %}max-width: var(--hero-max-width);{% endif %}
+  "
+>
   <div class="vironax-hero__slides">
     {% for block in section.blocks %}
       <div class="vironax-hero__slide {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
         {% if block.settings.image != blank %}
-          <img 
-            src="{{ block.settings.image | image_url: width: 1920 }}" 
-            alt="VironaX Hero"
-            class="vironax-hero__image"
+          {%- comment -%}Desktop image{%- endcomment -%}
+          <img
+            src="{{ block.settings.image | image_url: width: 1920 }}"
+            srcset="
+              {{ block.settings.image | image_url: width: 768 }} 768w,
+              {{ block.settings.image | image_url: width: 1024 }} 1024w,
+              {{ block.settings.image | image_url: width: 1440 }} 1440w,
+              {{ block.settings.image | image_url: width: 1920 }} 1920w
+            "
+            sizes="100vw"
+            alt="{{ block.settings.image.alt | default: 'VironaX Hero' }}"
+            class="vironax-hero__image vironax-hero__image--desktop"
             loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
           >
+          {%- comment -%}Mobile-specific image if uploaded{%- endcomment -%}
+          {% if block.settings.mobile_image != blank %}
+            <img
+              src="{{ block.settings.mobile_image | image_url: width: 800 }}"
+              srcset="
+                {{ block.settings.mobile_image | image_url: width: 375 }} 375w,
+                {{ block.settings.mobile_image | image_url: width: 414 }} 414w,
+                {{ block.settings.mobile_image | image_url: width: 600 }} 600w,
+                {{ block.settings.mobile_image | image_url: width: 800 }} 800w
+              "
+              sizes="100vw"
+              alt="{{ block.settings.mobile_image.alt | default: 'VironaX Hero Mobile' }}"
+              class="vironax-hero__image vironax-hero__image--mobile"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            >
+          {% endif %}
         {% else %}
           <div class="vironax-hero__placeholder">
             <span>Add Hero Image {{ forloop.index }}</span>
@@ -23,31 +75,33 @@
       </div>
     {% endfor %}
   </div>
-  
+
   <div class="vironax-hero__overlay"></div>
-  
-  <div class="vironax-hero__content">
+
+  <div class="vironax-hero__content" style="text-align: {{ section.settings.text_alignment }};">
     <h1 class="vironax-hero__headline">{{ section.settings.headline }}</h1>
-    
+
     <div class="vironax-hero__subtexts">
       <p class="vironax-hero__subtext">{{ section.settings.subtext_rings }}</p>
       <p class="vironax-hero__subtext vironax-hero__subtext--beads">{{ section.settings.subtext_beads }}</p>
     </div>
-    
+
     <p class="vironax-hero__small-text">{{ section.settings.small_text }}</p>
-    
-    <a href="{{ section.settings.button_link }}" class="vironax-hero__button">
-      {{ section.settings.button_text }}
-    </a>
+
+    {% if section.settings.button_text != blank %}
+      <a href="{{ section.settings.button_link }}" class="vironax-hero__button">
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
   </div>
-  
+
   <!-- Navigation Dots -->
   <div class="vironax-hero__dots">
     {% for block in section.blocks %}
       <button class="vironax-hero__dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
     {% endfor %}
   </div>
-  
+
   <!-- Navigation Arrows -->
   <button class="vironax-hero__arrow vironax-hero__arrow--prev" aria-label="Previous">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -61,9 +115,11 @@
   .vironax-hero {
     position: relative;
     width: 100%;
-    height: clamp(500px, 80vh, 750px);
+    height: var(--hero-desktop-height, clamp(500px, 80vh, 750px));
     overflow: hidden;
     background-color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .vironax-hero__slides {
@@ -89,8 +145,12 @@
   .vironax-hero__image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center right;
+    object-fit: var(--hero-object-fit, cover);
+    object-position: var(--hero-object-position, center);
+  }
+
+  .vironax-hero__image--mobile {
+    display: none;
   }
 
   .vironax-hero__placeholder {
@@ -116,8 +176,8 @@
     height: 100%;
     background: linear-gradient(
       to right,
-      rgba(0, 0, 0, 0.75) 0%,
-      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, var(--hero-overlay-opacity, 0.75)) 0%,
+      rgba(0, 0, 0, calc(var(--hero-overlay-opacity, 0.75) * 0.66)) 60%,
       rgba(0, 0, 0, 0) 100%
     );
     pointer-events: none;
@@ -128,12 +188,14 @@
   .vironax-hero__content {
     position: absolute;
     top: 50%;
-    left: var(--vironax-section-gutter);
+    left: var(--hero-padding-left, var(--vironax-section-gutter));
     transform: translateY(-50%);
     text-align: left;
     color: #FFFFFF !important;
     max-width: 480px;
     z-index: 2;
+    padding-top: var(--hero-padding-top);
+    padding-bottom: var(--hero-padding-bottom);
   }
 
   .vironax-hero__headline {
@@ -198,7 +260,7 @@
   .vironax-hero__dots {
     position: absolute;
     bottom: var(--spacing-lg);
-    left: var(--vironax-section-gutter);
+    left: var(--hero-padding-left, var(--vironax-section-gutter));
     display: flex;
     gap: var(--spacing-xs);
     z-index: 3;
@@ -250,29 +312,49 @@
     right: var(--spacing-sm);
   }
 
-  /* MOBILE - using consistent 700px breakpoint */
+  /* MOBILE OPTIMIZATION - Perfect fit on all screen sizes */
   @media screen and (max-width: 699px) {
     .vironax-hero {
-      height: clamp(400px, 70vh, 600px);
+      height: var(--hero-mobile-height, clamp(400px, 70vh, 600px));
+    }
+
+    /* Show mobile image if available */
+    .vironax-hero__image--desktop {
+      display: block;
+    }
+
+    .vironax-hero__slide:has(.vironax-hero__image--mobile) .vironax-hero__image--desktop {
+      display: none;
+    }
+
+    .vironax-hero__image--mobile {
+      display: block;
+    }
+
+    /* Mobile image positioning */
+    .vironax-hero__image {
+      object-position: {{ section.settings.mobile_image_position | default: 'center' }};
     }
 
     .vironax-hero__overlay {
       width: 100%;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.8) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.2) 100%
+        rgba(0, 0, 0, calc(var(--hero-overlay-opacity, 0.75) + 0.05)) 0%,
+        rgba(0, 0, 0, calc(var(--hero-overlay-opacity, 0.75) * 0.5)) 50%,
+        rgba(0, 0, 0, calc(var(--hero-overlay-opacity, 0.75) * 0.25)) 100%
       );
     }
 
     .vironax-hero__content {
       top: auto;
       bottom: var(--spacing-4xl);
-      left: var(--vironax-section-gutter);
-      right: var(--vironax-section-gutter);
+      left: var(--hero-padding-left, var(--vironax-section-gutter));
+      right: var(--hero-padding-right, var(--vironax-section-gutter));
       transform: none;
       max-width: none;
+      padding-top: var(--hero-padding-top-mobile);
+      padding-bottom: var(--hero-padding-bottom-mobile);
     }
 
     .vironax-hero__headline {
@@ -293,68 +375,90 @@
       height: 36px;
     }
   }
+
+  /* Extra small mobile devices (375px) */
+  @media screen and (max-width: 375px) {
+    .vironax-hero {
+      height: var(--hero-mobile-height, 50vh);
+    }
+
+    .vironax-hero__headline {
+      font-size: calc(var(--text-h1) * 0.8);
+    }
+  }
+
+  /* Medium mobile devices (390px - 414px) */
+  @media screen and (min-width: 376px) and (max-width: 428px) {
+    .vironax-hero {
+      height: var(--hero-mobile-height, 55vh);
+    }
+  }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const hero = document.querySelector('.vironax-hero');
   if (!hero) return;
-  
+
   const slides = hero.querySelectorAll('.vironax-hero__slide');
   const dots = hero.querySelectorAll('.vironax-hero__dot');
   const prevBtn = hero.querySelector('.vironax-hero__arrow--prev');
   const nextBtn = hero.querySelector('.vironax-hero__arrow--next');
-  
+
   if (slides.length <= 1) {
     // Hide nav if only 1 slide
     if (prevBtn) prevBtn.style.display = 'none';
     if (nextBtn) nextBtn.style.display = 'none';
-    hero.querySelector('.vironax-hero__dots').style.display = 'none';
+    const dotsContainer = hero.querySelector('.vironax-hero__dots');
+    if (dotsContainer) dotsContainer.style.display = 'none';
     return;
   }
-  
+
   let currentIndex = 0;
   let autoplayInterval;
-  
+  const autoplaySpeed = {{ section.settings.autoplay_speed | default: 4000 }};
+
   function goToSlide(index) {
     slides[currentIndex].classList.remove('is-active');
     dots[currentIndex].classList.remove('is-active');
-    
+
     currentIndex = (index + slides.length) % slides.length;
-    
+
     slides[currentIndex].classList.add('is-active');
     dots[currentIndex].classList.add('is-active');
   }
-  
+
   function nextSlide() {
     goToSlide(currentIndex + 1);
   }
-  
+
   function prevSlide() {
     goToSlide(currentIndex - 1);
   }
-  
+
   function startAutoplay() {
-    autoplayInterval = setInterval(nextSlide, 4000); // 4 seconds
+    if ({{ section.settings.enable_autoplay | default: true }}) {
+      autoplayInterval = setInterval(nextSlide, autoplaySpeed);
+    }
   }
-  
+
   function stopAutoplay() {
     clearInterval(autoplayInterval);
   }
-  
+
   // Event listeners
   if (prevBtn) prevBtn.addEventListener('click', function() {
     stopAutoplay();
     prevSlide();
     startAutoplay();
   });
-  
+
   if (nextBtn) nextBtn.addEventListener('click', function() {
     stopAutoplay();
     nextSlide();
     startAutoplay();
   });
-  
+
   dots.forEach(function(dot, index) {
     dot.addEventListener('click', function() {
       stopAutoplay();
@@ -362,11 +466,39 @@ document.addEventListener('DOMContentLoaded', function() {
       startAutoplay();
     });
   });
-  
+
   // Pause on hover
   hero.addEventListener('mouseenter', stopAutoplay);
   hero.addEventListener('mouseleave', startAutoplay);
-  
+
+  // Touch/swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  hero.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  hero.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      stopAutoplay();
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+      startAutoplay();
+    }
+  }
+
   // Start autoplay
   startAutoplay();
 });
@@ -376,6 +508,10 @@ document.addEventListener('DOMContentLoaded', function() {
 {
   "name": "VironaX Hero",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "headline",
@@ -410,6 +546,252 @@ document.addEventListener('DOMContentLoaded', function() {
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed (ms)",
+      "min": 2000,
+      "max": 10000,
+      "step": 500,
+      "default": 4000
+    },
+    {
+      "type": "header",
+      "content": "Desktop Height Settings"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop height",
+      "min": 300,
+      "max": 100,
+      "step": 5,
+      "default": 80
+    },
+    {
+      "type": "select",
+      "id": "desktop_height_unit",
+      "label": "Desktop height unit",
+      "options": [
+        { "value": "px", "label": "Pixels (px)" },
+        { "value": "vh", "label": "Viewport Height (vh)" }
+      ],
+      "default": "vh"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Height Settings"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile height",
+      "min": 200,
+      "max": 100,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "select",
+      "id": "mobile_height_unit",
+      "label": "Mobile height unit",
+      "options": [
+        { "value": "px", "label": "Pixels (px)" },
+        { "value": "vh", "label": "Viewport Height (vh)" }
+      ],
+      "default": "vh"
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image focal point (desktop)",
+      "options": [
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "center left", "label": "Center Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "center right", "label": "Center Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center right"
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_position",
+      "label": "Image focal point (mobile)",
+      "options": [
+        { "value": "top left", "label": "Top Left" },
+        { "value": "top center", "label": "Top Center" },
+        { "value": "top right", "label": "Top Right" },
+        { "value": "center left", "label": "Center Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "center right", "label": "Center Right" },
+        { "value": "bottom left", "label": "Bottom Left" },
+        { "value": "bottom center", "label": "Bottom Center" },
+        { "value": "bottom right", "label": "Bottom Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "object_fit",
+      "label": "Image fit",
+      "options": [
+        { "value": "cover", "label": "Cover (recommended)" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "fill", "label": "Fill/Stretch" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 75
+    },
+    {
+      "type": "header",
+      "content": "Size Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (if not full width)",
+      "min": 800,
+      "max": 1920,
+      "step": 20,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding left (content)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding right (content)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
     }
   ],
   "blocks": [
@@ -420,8 +802,14 @@ document.addEventListener('DOMContentLoaded', function() {
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Slide Image",
+          "label": "Desktop Image",
           "info": "Recommended: 1920x1080px (16:9)"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image (optional)",
+          "info": "Recommended: 800x1200px (2:3 portrait). If not set, desktop image will be used."
         }
       ]
     }

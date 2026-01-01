@@ -1,17 +1,46 @@
 {% comment %}
-  VironaX Subcategory Row
-  Small square stone images for ring subcategories
-  OTTASILVER-inspired styling
+  VironaX Subcategory Row - Enhanced Version
+  BIGGER stone images for ring subcategories (30-50% increase)
+  With universal padding/size/spacing controls
 {% endcomment %}
 
-<div class="vironax-subcategories">
+<style>
+  #shopify-section-{{ section.id }} {
+    --subcategory-icon-size: {{ section.settings.icon_size }}px;
+    --subcategory-icon-size-tablet: {{ section.settings.icon_size_tablet }}px;
+    --subcategory-icon-size-mobile: {{ section.settings.icon_size_mobile }}px;
+    --subcategory-gap: {{ section.settings.item_gap }}px;
+    --subcategory-padding-top: {{ section.settings.padding_top }}px;
+    --subcategory-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --subcategory-padding-left: {{ section.settings.padding_left }}px;
+    --subcategory-padding-right: {{ section.settings.padding_right }}px;
+    --subcategory-margin-top: {{ section.settings.margin_top }}px;
+    --subcategory-margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+</style>
+
+<div
+  class="vironax-subcategories"
+  style="
+    margin-top: var(--subcategory-margin-top);
+    margin-bottom: var(--subcategory-margin-bottom);
+    {% if section.settings.full_width %}max-width: 100%;{% else %}max-width: {{ section.settings.max_width }}px;{% endif %}
+  "
+>
   <div class="vironax-subcategories__row">
     {% for block in section.blocks %}
       <a href="{{ block.settings.link }}" class="vironax-subcategories__item">
         <div class="vironax-subcategories__image-container">
           {% if block.settings.image != blank %}
-            <img 
-              src="{{ block.settings.image | image_url: width: 200 }}" 
+            <img
+              src="{{ block.settings.image | image_url: width: 300 }}"
+              srcset="
+                {{ block.settings.image | image_url: width: 100 }} 100w,
+                {{ block.settings.image | image_url: width: 150 }} 150w,
+                {{ block.settings.image | image_url: width: 200 }} 200w,
+                {{ block.settings.image | image_url: width: 300 }} 300w
+              "
+              sizes="(max-width: 699px) {{ section.settings.icon_size_mobile }}px, (max-width: 999px) {{ section.settings.icon_size_tablet }}px, {{ section.settings.icon_size }}px"
               alt="{{ block.settings.title }}"
               class="vironax-subcategories__image"
               loading="lazy"
@@ -30,19 +59,38 @@
 
 <style>
   .vironax-subcategories {
-    padding: var(--spacing-3xl) var(--vironax-section-gutter);
+    padding-top: var(--subcategory-padding-top);
+    padding-bottom: var(--subcategory-padding-bottom);
+    padding-left: var(--subcategory-padding-left);
+    padding-right: var(--subcategory-padding-right);
     background-color: rgb(var(--background));
-    max-width: var(--vironax-container-max-width);
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .vironax-subcategories__row {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: var(--spacing-xl);
+    gap: var(--subcategory-gap, var(--spacing-xl));
     flex-wrap: wrap;
   }
+
+  /* Horizontal scrolling option */
+  {% if section.settings.enable_scroll %}
+  .vironax-subcategories__row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .vironax-subcategories__row::-webkit-scrollbar {
+    display: none;
+  }
+  {% endif %}
 
   .vironax-subcategories__item {
     display: flex;
@@ -52,22 +100,28 @@
     text-decoration: none;
     color: inherit;
     transition: opacity 0.3s ease;
+    flex-shrink: 0;
   }
 
   .vironax-subcategories__item:hover {
     opacity: 0.7;
   }
 
+  /* BIGGER ICON SIZES - 30-50% larger than before */
   .vironax-subcategories__image-container {
-    width: 80px;
-    height: 80px;
+    width: var(--subcategory-icon-size, 120px);
+    height: var(--subcategory-icon-size, 120px);
     overflow: hidden;
-    border: 1px solid rgb(var(--border-color));
-    transition: border-color 0.3s ease;
+    border: {{ section.settings.border_width }}px solid rgb(var(--border-color));
+    border-radius: {{ section.settings.border_radius }}px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
   }
 
   .vironax-subcategories__item:hover .vironax-subcategories__image-container {
     border-color: rgb(var(--text-color));
+    {% if section.settings.hover_scale %}
+    transform: scale(1.05);
+    {% endif %}
   }
 
   .vironax-subcategories__image {
@@ -96,33 +150,50 @@
 
   .vironax-subcategories__title {
     font-family: var(--text-font-family);
-    font-size: var(--text-xs);
-    font-weight: 500;
-    text-transform: uppercase;
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+    text-transform: {{ section.settings.title_text_transform }};
     letter-spacing: var(--text-letter-spacing);
     color: rgb(var(--text-color));
     text-align: center;
+    max-width: var(--subcategory-icon-size, 120px);
   }
 
+  /* Tablet */
   @media screen and (max-width: 999px) {
     .vironax-subcategories__row {
-      gap: var(--spacing-lg);
+      gap: calc(var(--subcategory-gap, var(--spacing-lg)) * 0.8);
     }
 
     .vironax-subcategories__image-container {
-      width: 70px;
-      height: 70px;
+      width: var(--subcategory-icon-size-tablet, 100px);
+      height: var(--subcategory-icon-size-tablet, 100px);
+    }
+
+    .vironax-subcategories__title {
+      max-width: var(--subcategory-icon-size-tablet, 100px);
     }
   }
 
+  /* Mobile */
   @media screen and (max-width: 699px) {
+    .vironax-subcategories {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
     .vironax-subcategories__row {
-      gap: var(--spacing-md);
+      gap: calc(var(--subcategory-gap, var(--spacing-md)) * 0.6);
     }
 
     .vironax-subcategories__image-container {
-      width: 60px;
-      height: 60px;
+      width: var(--subcategory-icon-size-mobile, 80px);
+      height: var(--subcategory-icon-size-mobile, 80px);
+    }
+
+    .vironax-subcategories__title {
+      font-size: {{ section.settings.title_font_size_mobile | default: 10 }}px;
+      max-width: var(--subcategory-icon-size-mobile, 80px);
     }
   }
 </style>
@@ -130,7 +201,249 @@
 {% schema %}
 {
   "name": "VironaX Subcategory Row",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Icon Size Settings"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size (desktop)",
+      "info": "BIGGER than default - recommended 100-150px for medium icons",
+      "min": 60,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "icon_size_tablet",
+      "label": "Icon size (tablet)",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Icon size (mobile)",
+      "min": 40,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap between items",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll",
+      "label": "Enable horizontal scrolling",
+      "info": "Instead of wrapping to next line",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width section",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (if not full width)",
+      "min": 800,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1360
+    },
+    {
+      "type": "header",
+      "content": "Border Settings"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "hover_scale",
+      "label": "Scale on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Title Settings"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size (desktop)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Title font size (mobile)",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Title text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    }
+  ],
   "blocks": [
     {
       "type": "subcategory",

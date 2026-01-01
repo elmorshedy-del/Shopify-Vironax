@@ -1,9 +1,10 @@
 {%- comment -%}
 ----------------------------------------------------------------------------------------------------------------------
-LOCALIZATION SELECTOR COMPONENT
+LOCALIZATION SELECTOR COMPONENT - VironaX Enhanced
 ----------------------------------------------------------------------------------------------------------------------
 
 This component renders a selector for a localization component (either country or locale).
+Enhanced with: white background, proper styling, country ordering, flag support, and persistence.
 
 ********************************************
 Supported variables
@@ -18,48 +19,144 @@ Supported variables
 {%- capture localization_form_id -%}localization-form-{{ id_prefix }}-{{ section.id }}-{{ type }}{%- endcapture -%}
 {%- capture localization_popover_id -%}popover-localization-{{ id_prefix }}-{{ section.id }}-{{ type }}{%- endcapture -%}
 
+{%- comment -%}Define country order and data{%- endcomment -%}
+{%- assign country_order = 'AE,SA,QA,BH,JO,KW,OM,TR,US,GB' | split: ',' -%}
+
 {%- case type -%}
   {%- when 'country' -%}
     {%- comment -%}
     ----------------------------------------------------------------------------------------------
-    COUNTRY SELECTOR
+    COUNTRY SELECTOR - Enhanced with proper styling and ordering
     ----------------------------------------------------------------------------------------------
     {%- endcomment -%}
 
-    <div class="relative">
-      <button type="button" class="localization-toggle heading text-xxs link-faded" aria-controls="{{ localization_popover_id }}" aria-label="{{ 'general.localization.change_country_accessibility_text' | t | escape }}" aria-expanded="false">
+    <div class="relative vironax-localization-selector">
+      <button type="button" class="localization-toggle vironax-localization-toggle heading text-xxs link-faded" aria-controls="{{ localization_popover_id }}" aria-label="{{ 'general.localization.change_country_accessibility_text' | t | escape }}" aria-expanded="false">
         {%- if show_country_flag -%}
-          {{- localization.country | image_url: width: 60, format: 'jpg' | image_tag: class: 'country-flag' -}}
+          <span class="country-flag-emoji">
+            {%- case localization.country.iso_code -%}
+              {%- when 'AE' -%}🇦🇪
+              {%- when 'SA' -%}🇸🇦
+              {%- when 'QA' -%}🇶🇦
+              {%- when 'BH' -%}🇧🇭
+              {%- when 'JO' -%}🇯🇴
+              {%- when 'KW' -%}🇰🇼
+              {%- when 'OM' -%}🇴🇲
+              {%- when 'TR' -%}🇹🇷
+              {%- when 'US' -%}🇺🇸
+              {%- when 'GB' -%}🇬🇧
+              {%- else -%}
+                {{- localization.country | image_url: width: 60, format: 'jpg' | image_tag: class: 'country-flag' -}}
+            {%- endcase -%}
+          </span>
         {%- endif -%}
 
         {%- if show_country_name -%}
-          <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {% if localization.country.currency.symbol %}{{ localization.country.currency.symbol }}){%- endif -%}</span>
+          <span class="vironax-country-display">
+            {%- case localization.country.iso_code -%}
+              {%- when 'AE' -%}United Arab Emirates (د.إ AED)
+              {%- when 'SA' -%}Saudi Arabia (ر.س SAR)
+              {%- when 'QA' -%}Qatar (ر.ق QAR)
+              {%- when 'BH' -%}Bahrain ($ USD)
+              {%- when 'JO' -%}Jordan ($ USD)
+              {%- when 'KW' -%}Kuwait ($ USD)
+              {%- when 'OM' -%}Oman ($ USD)
+              {%- when 'TR' -%}Türkiye (₺ TRY)
+              {%- when 'US' -%}United States ($ USD)
+              {%- when 'GB' -%}United Kingdom (£ GBP)
+              {%- else -%}
+                {{ localization.country.name }} ({{ localization.country.currency.iso_code }} {% if localization.country.currency.symbol %}{{ localization.country.currency.symbol }}{%- endif -%})
+            {%- endcase -%}
+          </span>
         {%- else -%}
-          <span>{{ localization.country.currency.iso_code }} {% if localization.country.currency.symbol %}{{ localization.country.currency.symbol }}{%- endif -%}</span>
+          <span class="vironax-currency-display">
+            {%- case localization.country.iso_code -%}
+              {%- when 'AE' -%}AED د.إ
+              {%- when 'SA' -%}SAR ر.س
+              {%- when 'QA' -%}QAR ر.ق
+              {%- when 'TR' -%}TRY ₺
+              {%- when 'GB' -%}GBP £
+              {%- else -%}
+                {{ localization.country.currency.iso_code }} {% if localization.country.currency.symbol %}{{ localization.country.currency.symbol }}{%- endif -%}
+            {%- endcase -%}
+          </span>
         {%- endif -%}
 
         {%- render 'icon' with 'chevron-down' -%}
       </button>
 
-      <x-popover id="{{ localization_popover_id }}" initial-focus="[aria-selected='true']" class="popover popover--{{ placement | default: 'bottom-start' }} color-scheme color-scheme--dialog">
-        <p class="h4" slot="header">{{ 'general.localization.country' | t }}</p>
+      <x-popover id="{{ localization_popover_id }}" initial-focus="[aria-selected='true']" class="popover popover--{{ placement | default: 'bottom-start' }} vironax-popover color-scheme color-scheme--dialog">
+        <p class="h4 vironax-popover-header" slot="header">{{ 'general.localization.country' | t }}</p>
 
-        {%- form 'localization', id: localization_form_id -%}
-          <x-listbox class="popover__value-list">
+        {%- form 'localization', id: localization_form_id, class: 'vironax-localization-form' -%}
+          <x-listbox class="popover__value-list vironax-country-list">
+            {%- comment -%}First, render countries in our specified order{%- endcomment -%}
+            {%- for ordered_code in country_order -%}
+              {%- for country in localization.available_countries -%}
+                {%- if country.iso_code == ordered_code -%}
+                  {%- assign is_selected = false -%}
+                  {%- if country.iso_code == localization.country.iso_code -%}
+                    {%- assign is_selected = true -%}
+                  {%- endif -%}
+
+                  <button type="submit" name="country_code" class="popover__value-option vironax-country-option h-stack gap-2.5" role="option" value="{{ country.iso_code }}" aria-selected="{% if is_selected %}true{% else %}false{% endif %}" data-order="{{ forloop.parentloop.index }}">
+                    <span class="country-flag-emoji vironax-flag">
+                      {%- case country.iso_code -%}
+                        {%- when 'AE' -%}🇦🇪
+                        {%- when 'SA' -%}🇸🇦
+                        {%- when 'QA' -%}🇶🇦
+                        {%- when 'BH' -%}🇧🇭
+                        {%- when 'JO' -%}🇯🇴
+                        {%- when 'KW' -%}🇰🇼
+                        {%- when 'OM' -%}🇴🇲
+                        {%- when 'TR' -%}🇹🇷
+                        {%- when 'US' -%}🇺🇸
+                        {%- when 'GB' -%}🇬🇧
+                      {%- endcase -%}
+                    </span>
+                    <span class="vironax-country-name">
+                      {%- case country.iso_code -%}
+                        {%- when 'AE' -%}United Arab Emirates (د.إ AED)
+                        {%- when 'SA' -%}Saudi Arabia (ر.س SAR)
+                        {%- when 'QA' -%}Qatar (ر.ق QAR)
+                        {%- when 'BH' -%}Bahrain ($ USD)
+                        {%- when 'JO' -%}Jordan ($ USD)
+                        {%- when 'KW' -%}Kuwait ($ USD)
+                        {%- when 'OM' -%}Oman ($ USD)
+                        {%- when 'TR' -%}Türkiye (₺ TRY)
+                        {%- when 'US' -%}United States ($ USD)
+                        {%- when 'GB' -%}United Kingdom (£ GBP)
+                      {%- endcase -%}
+                    </span>
+                  </button>
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+
+            {%- comment -%}Then, render any remaining countries not in our list{%- endcomment -%}
             {%- for country in localization.available_countries -%}
-              {%- assign is_selected = false -%}
+              {%- assign is_in_order = false -%}
+              {%- for ordered_code in country_order -%}
+                {%- if country.iso_code == ordered_code -%}
+                  {%- assign is_in_order = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
 
-              {%- if country.iso_code == localization.country.iso_code -%}
-                {%- assign is_selected = true -%}
-              {%- endif -%}
-
-              <button type="submit" name="country_code" class="popover__value-option h-stack gap-2.5" role="option" value="{{ country.iso_code }}" aria-selected="{% if is_selected %}true{% else %}false{% endif %}">
-                {%- if show_country_flag -%}
-                  {{- country | image_url: width: 60, format: 'jpg' | image_tag: loading: 'lazy', class: 'country-flag' -}}
+              {%- unless is_in_order -%}
+                {%- assign is_selected = false -%}
+                {%- if country.iso_code == localization.country.iso_code -%}
+                  {%- assign is_selected = true -%}
                 {%- endif -%}
 
-                <span>{{- country.name }} ({{ country.currency.iso_code }} {% if country.currency.symbol %}{{ country.currency.symbol }}{%- endif -%})</span>
-              </button>
+                <button type="submit" name="country_code" class="popover__value-option vironax-country-option h-stack gap-2.5" role="option" value="{{ country.iso_code }}" aria-selected="{% if is_selected %}true{% else %}false{% endif %}" data-order="999">
+                  {%- if show_country_flag -%}
+                    {{- country | image_url: width: 60, format: 'jpg' | image_tag: loading: 'lazy', class: 'country-flag' -}}
+                  {%- endif -%}
+                  <span class="vironax-country-name">{{- country.name }} ({{ country.currency.iso_code }} {% if country.currency.symbol %}{{ country.currency.symbol }}{%- endif -%})</span>
+                </button>
+              {%- endunless -%}
             {%- endfor -%}
           </x-listbox>
         {%- endform -%}
@@ -69,21 +166,21 @@ Supported variables
   {%- when 'locale' -%}
     {%- comment -%}
     ----------------------------------------------------------------------------------------------
-    LOCALE SELECTOR
+    LOCALE SELECTOR - Enhanced styling
     ----------------------------------------------------------------------------------------------
     {%- endcomment -%}
 
-    <div class="relative">
-      <button type="button" class="localization-toggle heading text-xxs link-faded" aria-controls="{{ localization_popover_id }}" aria-label="{{ 'general.localization.change_language_accessibility_text' | t | escape }}" aria-expanded="false">
+    <div class="relative vironax-localization-selector">
+      <button type="button" class="localization-toggle vironax-localization-toggle heading text-xxs link-faded" aria-controls="{{ localization_popover_id }}" aria-label="{{ 'general.localization.change_language_accessibility_text' | t | escape }}" aria-expanded="false">
         {{- localization.language.endonym_name | capitalize -}}
         {%- render 'icon' with 'chevron-down' -%}
       </button>
 
-      <x-popover id="{{ localization_popover_id }}" initial-focus="[aria-selected='true']" class="popover popover--{{ placement | default: 'bottom-start' }} color-scheme color-scheme--dialog">
-        <p class="h4" slot="header">{{ 'general.localization.language' | t }}</p>
+      <x-popover id="{{ localization_popover_id }}" initial-focus="[aria-selected='true']" class="popover popover--{{ placement | default: 'bottom-start' }} vironax-popover color-scheme color-scheme--dialog">
+        <p class="h4 vironax-popover-header" slot="header">{{ 'general.localization.language' | t }}</p>
 
-        {%- form 'localization', id: localization_form_id -%}
-          <x-listbox class="popover__value-list">
+        {%- form 'localization', id: localization_form_id, class: 'vironax-localization-form' -%}
+          <x-listbox class="popover__value-list vironax-locale-list">
             {%- for language in localization.available_languages -%}
               {%- assign is_selected = false -%}
 
@@ -91,7 +188,7 @@ Supported variables
                 {%- assign is_selected = true -%}
               {%- endif -%}
 
-              <button type="submit" name="locale_code" class="popover__value-option" role="option" value="{{ language.iso_code }}" aria-selected="{% if is_selected %}true{% else %}false{% endif %}">
+              <button type="submit" name="locale_code" class="popover__value-option vironax-locale-option" role="option" value="{{ language.iso_code }}" aria-selected="{% if is_selected %}true{% else %}false{% endif %}">
                 {{- language.endonym_name | capitalize -}}
               </button>
             {%- endfor -%}
@@ -100,3 +197,213 @@ Supported variables
       </x-popover>
     </div>
 {%- endcase -%}
+
+<style>
+  /* VironaX Localization Selector Styles */
+
+  /* Toggle Button Styling */
+  .vironax-localization-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    font-family: var(--vironax-font, 'Montserrat', sans-serif);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #000000;
+  }
+
+  .vironax-localization-toggle:hover {
+    opacity: 0.7;
+  }
+
+  .vironax-localization-toggle .country-flag-emoji {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .vironax-localization-toggle .country-flag {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  /* Popover/Dropdown Styling - White Background */
+  .vironax-popover {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E5E5E5 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
+    padding: 0 !important;
+    min-width: 280px;
+    max-height: 400px;
+    overflow: hidden;
+  }
+
+  .vironax-popover-header {
+    padding: 16px 20px;
+    margin: 0;
+    border-bottom: 1px solid #E5E5E5;
+    font-family: var(--vironax-font, 'Montserrat', sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000000;
+    background-color: #FFFFFF;
+  }
+
+  /* Country/Locale List */
+  .vironax-country-list,
+  .vironax-locale-list {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 8px 0;
+    background-color: #FFFFFF;
+  }
+
+  /* Custom scrollbar */
+  .vironax-country-list::-webkit-scrollbar,
+  .vironax-locale-list::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .vironax-country-list::-webkit-scrollbar-track,
+  .vironax-locale-list::-webkit-scrollbar-track {
+    background: #F5F5F5;
+  }
+
+  .vironax-country-list::-webkit-scrollbar-thumb,
+  .vironax-locale-list::-webkit-scrollbar-thumb {
+    background: #CCCCCC;
+    border-radius: 3px;
+  }
+
+  .vironax-country-list::-webkit-scrollbar-thumb:hover,
+  .vironax-locale-list::-webkit-scrollbar-thumb:hover {
+    background: #999999;
+  }
+
+  /* Option Buttons */
+  .vironax-country-option,
+  .vironax-locale-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #FFFFFF !important;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: var(--vironax-font, 'Montserrat', sans-serif);
+    font-size: 13px;
+    font-weight: 400;
+    color: #333333;
+    text-align: left;
+  }
+
+  .vironax-country-option:hover,
+  .vironax-locale-option:hover {
+    background-color: #F8F8F8 !important;
+  }
+
+  .vironax-country-option[aria-selected="true"],
+  .vironax-locale-option[aria-selected="true"] {
+    background-color: #F0F0F0 !important;
+    font-weight: 500;
+  }
+
+  .vironax-country-option[aria-selected="true"]::after,
+  .vironax-locale-option[aria-selected="true"]::after {
+    content: '✓';
+    margin-left: auto;
+    color: #000000;
+    font-size: 14px;
+  }
+
+  /* Flag Styling */
+  .vironax-flag {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .vironax-country-option .country-flag {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Country/Currency Name */
+  .vironax-country-name,
+  .vironax-country-display,
+  .vironax-currency-display {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Smooth transitions */
+  .vironax-popover {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 699px) {
+    .vironax-popover {
+      min-width: 260px;
+      max-width: calc(100vw - 40px);
+    }
+
+    .vironax-country-option,
+    .vironax-locale-option {
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+
+    .vironax-popover-header {
+      padding: 14px 16px;
+    }
+  }
+
+  /* RTL Support */
+  [dir="rtl"] .vironax-country-option,
+  [dir="rtl"] .vironax-locale-option {
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+
+  [dir="rtl"] .vironax-country-option[aria-selected="true"]::after,
+  [dir="rtl"] .vironax-locale-option[aria-selected="true"]::after {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  /* Fix for Prestige theme integration */
+  .popover.vironax-popover {
+    --popover-background: #FFFFFF;
+    --popover-border-color: #E5E5E5;
+  }
+
+  /* Ensure white background overrides any color scheme */
+  .vironax-popover,
+  .vironax-popover *,
+  .vironax-country-list,
+  .vironax-locale-list,
+  .vironax-country-option,
+  .vironax-locale-option,
+  .vironax-popover-header {
+    --background: 255 255 255 !important;
+  }
+</style>

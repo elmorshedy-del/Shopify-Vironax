@@ -56,6 +56,73 @@
     {{ content_for_header }}
 
     {{- 'theme.css' | asset_url | stylesheet_tag: preload: true -}}
+
+    {%- comment -%}VironaX Custom Styles & Scripts{%- endcomment -%}
+    {{- 'vironax-product-buy-fix.css' | asset_url | stylesheet_tag -}}
+
+    {%- comment -%}VironaX Header & Logo Styles - Remove glow/shadow effects{%- endcomment -%}
+    <style>
+      /* Remove ALL glow and shadow effects from logo */
+      .header__logo,
+      .header__logo-image,
+      .header__logo-text,
+      .header__logo a,
+      .header__logo img,
+      [class*="logo"] {
+        filter: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        -webkit-filter: none !important;
+      }
+
+      /* Ensure logo blends naturally with header */
+      .header__logo-image {
+        display: block;
+        height: auto;
+        max-width: 100%;
+      }
+
+      /* Remove any hover glow effects */
+      .header__logo:hover,
+      .header__logo a:hover,
+      .header__logo-image:hover {
+        filter: none !important;
+        box-shadow: none !important;
+        opacity: 0.9;
+      }
+
+      /* Mobile menu localization */
+      @media screen and (max-width: 699px) {
+        .localization-selectors {
+          display: flex !important;
+        }
+      }
+    </style>
+
+    {%- comment -%}Checkout Language Override{%- endcomment -%}
+    <script>
+      (function() {
+        // Store language preference for checkout
+        var savedLocale = localStorage.getItem('vironax_selected_locale');
+        if (savedLocale) {
+          document.documentElement.setAttribute('data-user-locale', savedLocale);
+        }
+
+        // Apply locale to checkout if available
+        if (window.Shopify && window.Shopify.checkout) {
+          var checkoutLocale = localStorage.getItem('vironax_selected_locale');
+          if (checkoutLocale) {
+            // Add locale parameter to checkout URLs
+            document.querySelectorAll('a[href*="/checkout"]').forEach(function(link) {
+              var url = new URL(link.href, window.location.origin);
+              url.searchParams.set('locale', checkoutLocale);
+              link.href = url.toString();
+            });
+          }
+        }
+      })();
+    </script>
+
   <script type="text/javascript">if(typeof window.hulkappsWishlist === 'undefined') {
                             window.hulkappsWishlist = {};
                         }
@@ -66,11 +133,11 @@
 
   {% liquid
     assign features_class = ''
-  
+
     if settings.show_button_transition
       assign features_class = features_class | append: 'features--button-transition '
     endif
-  
+
     if settings.show_image_zoom_on_hover
       assign features_class = features_class | append: 'features--zoom-image '
     endif
@@ -106,5 +173,9 @@
         {%- sections 'footer-group' -%}
       {%- endif -%}
     </main>
+
+    {%- comment -%}VironaX Custom Scripts - Load at end of body{%- endcomment -%}
+    <script src="{{ 'currency-language-persistence.js' | asset_url }}" defer></script>
+    <script src="{{ 'sticky-elements.js' | asset_url }}" defer></script>
   </body>
 </html>
