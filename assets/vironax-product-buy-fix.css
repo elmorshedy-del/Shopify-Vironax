@@ -1,249 +1,273 @@
 /**
- * VironaX Product Buy Section Fix
- * Removes black background boxes and applies white aesthetic
- * Clean, minimal button styling
+ * VironaX Product Buy Section Fix - PRESTIGE THEME
+ * Forces white background and outline button styling
+ * Updated with aggressive overrides for Prestige theme
  */
 
-/* === MAIN PRODUCT BUY SECTION === */
-
-/* Remove all dark backgrounds from product form area */
+/* === FORCE WHITE BACKGROUND ON ENTIRE PRODUCT INFO SECTION === */
 .product-info,
-.product-form,
-.product-form__controls,
-.product-form__actions,
-.product__info-container,
-.product__buy-section,
+.product-info__block-group,
+.product-info__block-item,
+.product-info__block-item[data-block-type="buy-buttons"],
+.product-info__block-item[data-block-type="variant_picker"],
+.product-info__block-item[data-block-type="quantity_selector"],
+[data-block-type="buy-buttons"],
+.shopify-section--main-product,
+.shopify-section--main-product .color-scheme,
+.shopify-section--main-product [class*="color-scheme"] {
+  --background: 255 255 255 !important;
+  --text-color: 0 0 0 !important;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+}
+
+/* === OVERRIDE COLOR SCHEME VARIABLES === */
+.shopify-section--main-product,
+.shopify-section--main-product [class*="color-scheme"] {
+  --background: 255 255 255 !important;
+  --background-gradient: none !important;
+  --text-color: 0 0 0 !important;
+  --button-background: 255 255 255 !important;
+  --button-text-color: 0 0 0 !important;
+  --button-outline-color: 0 0 0 !important;
+}
+
+/* === BUY BUTTONS CONTAINER === */
+buy-buttons,
 .buy-buttons,
-.product-form__buttons,
-.payment-terms,
-.shopify-payment-button,
-.shopify-payment-button__button--unbranded,
-.product-form__submit,
-[data-product-form],
-.product__content {
+buy-buttons.buy-buttons,
+.buy-buttons.buy-buttons--has-dynamic,
+product-form,
+product-form .v-stack {
   background-color: #FFFFFF !important;
   background: #FFFFFF !important;
 }
 
-/* Ring size selector area - white background */
-.variant-picker,
-.variant-picker__wrapper,
-.variant-picker__option,
-.variant-radios,
-.product-form__input,
-.product-option,
-.product-variant-picker {
+/* === ADD TO CART BUTTON - OUTLINE STYLE === */
+buy-buttons .button,
+buy-buttons button.button,
+.buy-buttons .button,
+.buy-buttons button.button,
+.buy-buttons button[type="submit"],
+button.button[type="submit"],
+.product-info .button,
+.product-info button.button,
+.shopify-section--main-product .button:not(.shopify-payment-button__button--branded),
+.shopify-section--main-product button.button:not(.shopify-payment-button__button--branded),
+product-form .button,
+product-form button.button {
+  --button-background: 255 255 255 !important;
+  --button-text-color: 0 0 0 !important;
+  --button-outline-color: 0 0 0 !important;
   background-color: #FFFFFF !important;
   background: #FFFFFF !important;
-}
-
-/* Size Chart Button - Outline style on white */
-.size-chart-button,
-.size-chart-link,
-.size-guide-button,
-[class*="size-chart"],
-[class*="size-guide"],
-button[aria-label*="Size"],
-button[aria-label*="size"],
-a[href*="size-chart"],
-a[href*="size-guide"] {
-  background-color: #FFFFFF !important;
-  background: #FFFFFF !important;
-  border: 1.5px solid #000000 !important;
   color: #000000 !important;
-  box-shadow: none !important;
-}
-
-.size-chart-button:hover,
-.size-chart-link:hover,
-.size-guide-button:hover,
-[class*="size-chart"]:hover,
-[class*="size-guide"]:hover {
-  background-color: #F5F5F5 !important;
-}
-
-/* ADD TO CART Button - Outline style on white */
-.product-form__submit,
-.add-to-cart-button,
-.btn--add-to-cart,
-button[name="add"],
-.product-form__cart-submit,
-.product__submit__add,
-[class*="add-to-cart"],
-.shopify-payment-button__button--unbranded {
-  background-color: #FFFFFF !important;
-  background: #FFFFFF !important;
   border: 1.5px solid #000000 !important;
-  color: #000000 !important;
   box-shadow: none !important;
   text-shadow: none !important;
 }
 
-.product-form__submit:hover,
-.add-to-cart-button:hover,
-.btn--add-to-cart:hover,
-button[name="add"]:hover,
-.product-form__cart-submit:hover,
-.product__submit__add:hover,
-[class*="add-to-cart"]:hover,
-.shopify-payment-button__button--unbranded:hover {
+/* Hover state for Add to Cart */
+buy-buttons .button:hover,
+.buy-buttons .button:hover,
+.buy-buttons button[type="submit"]:hover,
+.shopify-section--main-product .button:hover:not(.shopify-payment-button__button--branded),
+product-form .button:hover {
+  --button-background: 0 0 0 !important;
+  --button-text-color: 255 255 255 !important;
   background-color: #000000 !important;
+  background: #000000 !important;
   color: #FFFFFF !important;
 }
 
-/* Shop Pay Button - Keep original purple styling */
-.shopify-payment-button__button--branded,
-.shopify-payment-button [role="button"]:not(.shopify-payment-button__button--unbranded),
-.shop-pay-button,
-[class*="shop-pay"],
-.dynamic-checkout-button {
-  /* Keep original Shop Pay styling */
-  box-shadow: none !important;
-}
-
-/* Remove black box around Shop Pay container */
-.shopify-payment-button,
-.dynamic-checkout-buttons,
-.product-form__checkout,
-.payment-buttons,
-.additional-checkout-buttons {
+/* === SOLID BUTTON OVERRIDE (force to outline) === */
+buy-buttons .button:not(.button--outline),
+.buy-buttons .button:not(.button--outline),
+.shopify-section--main-product .button:not(.button--outline):not(.shopify-payment-button__button--branded) {
+  --button-background: 255 255 255 !important;
+  --button-text-color: 0 0 0 !important;
   background-color: #FFFFFF !important;
   background: #FFFFFF !important;
-  padding: 0 !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+/* === SHOPIFY PAYMENT BUTTONS CONTAINER === */
+.shopify-payment-button,
+.shopify-payment-button__button-container,
+buy-buttons .shopify-payment-button,
+.buy-buttons .shopify-payment-button {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
   box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* === SHOP PAY BUTTON - KEEP BRANDED STYLING === */
+.shopify-payment-button__button--branded,
+.shopify-payment-button [role="button"].shopify-payment-button__button--branded {
+  /* Keep original Shop Pay purple styling */
   border: none !important;
 }
 
-/* MORE PAYMENT OPTIONS Link - Simple underlined text */
-.payment-terms__content,
-.payment-terms,
-.shopify-payment-button__more-options,
-.more-payment-options,
-[class*="more-payment"],
-a[href*="checkout"] {
+/* === UNBRANDED PAYMENT BUTTON (More payment options button) === */
+.shopify-payment-button__button--unbranded,
+.shopify-payment-button [role="button"]:not(.shopify-payment-button__button--branded) {
+  --button-background: 255 255 255 !important;
+  --button-text-color: 0 0 0 !important;
   background-color: #FFFFFF !important;
   background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
   box-shadow: none !important;
-  text-shadow: none !important;
 }
 
+/* === MORE PAYMENT OPTIONS LINK === */
 .shopify-payment-button__more-options,
-.more-payment-options {
+buy-buttons .shopify-payment-button__more-options,
+.buy-buttons .shopify-payment-button__more-options {
+  background-color: transparent !important;
+  background: transparent !important;
   color: #000000 !important;
   text-decoration: underline !important;
   border: none !important;
+  box-shadow: none !important;
   padding: 10px 0 !important;
   font-size: 13px !important;
+  letter-spacing: 0.05em !important;
 }
 
-.shopify-payment-button__more-options:hover,
-.more-payment-options:hover {
+.shopify-payment-button__more-options:hover {
   color: #333333 !important;
+  text-decoration: underline !important;
 }
 
-/* Quantity selector */
-.quantity-selector,
-.quantity__wrapper,
-.product-form__quantity,
-.quantity,
-.quantity-input,
-.quantity__button {
-  background-color: #FFFFFF !important;
-  border-color: #E5E5E5 !important;
-}
-
-/* Product form wrapper */
-.product-form__input-wrapper,
-.product-form__variants,
-.product-form__options {
+/* === VARIANT PICKER / SIZE SELECTOR === */
+.variant-picker,
+.variant-picker__wrapper,
+.variant-picker__option,
+.product-info__block-item[data-block-type="variant_picker"],
+.variant-picker__option-selector,
+.block-swatch,
+.block-swatch-list {
   background-color: #FFFFFF !important;
   background: #FFFFFF !important;
 }
 
-/* Remove any remaining black boxes */
-.product-form__controls-group,
-.product-info__block,
-.product__blocks,
-.product-block {
-  background-color: transparent !important;
-  background: transparent !important;
-}
-
-/* Product info wrapper */
-.product__column-sticky,
-.product__info-wrapper,
-.product__details {
+/* Size/Variant buttons */
+.block-swatch button,
+.block-swatch-list button,
+.variant-picker button,
+.variant-picker__option button {
   background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #E5E5E5 !important;
 }
 
-/* Clean up any box shadows */
-.product-form *,
+.block-swatch button:hover,
+.block-swatch-list button:hover,
+.block-swatch button[aria-checked="true"],
+.block-swatch-list button[aria-checked="true"] {
+  border-color: #000000 !important;
+}
+
+/* === QUANTITY SELECTOR === */
+.quantity-selector,
+quantity-selector,
+.product-info__block-item[data-block-type="quantity_selector"] {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+}
+
+/* === SIZE CHART BUTTON === */
+.size-chart-button,
+button.size-chart-button,
+a[href*="size-chart"],
+a[href*="size-guide"],
+[class*="size-chart"],
+[class*="size-guide"],
+.product-info .button.button--subdued {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+/* === PRODUCT STICKY BAR === */
+.product-sticky-bar,
+product-sticky-bar {
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+}
+
+.product-sticky-bar .button,
+.product-sticky-bar buy-buttons .button {
+  --button-background: 255 255 255 !important;
+  --button-text-color: 0 0 0 !important;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+/* === REMOVE ALL SHADOWS AND GLOWS === */
 .product-info *,
-.buy-buttons * {
+buy-buttons *,
+.buy-buttons *,
+.shopify-section--main-product .button,
+.shopify-section--main-product button {
   box-shadow: none !important;
   text-shadow: none !important;
 }
 
-/* === PRESTIGE THEME SPECIFIC OVERRIDES === */
-
-/* Prestige theme product form */
-.product-item__info,
-.product__info {
-  background-color: #FFFFFF !important;
-}
-
-/* Prestige buttons */
-.button--primary.product-form__add-button,
-.button--primary.product-form__cart-submit {
-  background-color: #FFFFFF !important;
-  background: #FFFFFF !important;
-  border: 1.5px solid #000000 !important;
-  color: #000000 !important;
-}
-
-.button--primary.product-form__add-button:hover,
-.button--primary.product-form__cart-submit:hover {
-  background-color: #000000 !important;
-  color: #FFFFFF !important;
-}
-
-/* Ensure color scheme doesn't override */
-.product-form [class*="color-scheme"],
-.product-info [class*="color-scheme"] {
+/* === QUICK BUY MODAL === */
+.quick-buy-modal,
+.quick-buy-modal__info-wrapper {
   --background: 255 255 255 !important;
+  background-color: #FFFFFF !important;
+}
+
+.quick-buy-modal buy-buttons .button,
+.quick-buy-modal .buy-buttons .button {
+  --button-background: 255 255 255 !important;
+  --button-text-color: 0 0 0 !important;
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
 }
 
 /* === MOBILE RESPONSIVE === */
 @media screen and (max-width: 699px) {
-  .product-form__submit,
-  .add-to-cart-button {
+  buy-buttons .button,
+  .buy-buttons .button,
+  .shopify-section--main-product .button:not(.shopify-payment-button__button--branded) {
     padding: 14px 24px !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
   }
 
   .shopify-payment-button__more-options {
-    font-size: 12px !important;
+    font-size: 11px !important;
   }
 }
 
-/* === ENSURE NO BLACK BACKGROUNDS ANYWHERE === */
-.product-form,
-.product-form > *,
-.product-form > * > *,
-.product-info,
-.product-info > *,
-.product-info > * > * {
-  background-color: #FFFFFF;
-  background: #FFFFFF;
+/* === NUCLEAR OPTION - OVERRIDE INLINE STYLES === */
+.shopify-section--main-product button[style*="--button-background"],
+buy-buttons button[style*="--button-background"],
+.buy-buttons button[style*="--button-background"] {
+  --button-background: 255 255 255 !important;
+  --button-text-color: 0 0 0 !important;
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
 }
 
-/* Final override for any stubborn elements */
-[style*="background-color: #000"],
-[style*="background: #000"],
-[style*="background-color: black"],
-[style*="background: black"],
-[style*="background-color: rgb(0"],
-[style*="background: rgb(0"] {
+/* === FINAL OVERRIDE FOR ANY STUBBORN DARK BACKGROUNDS === */
+.product-info [style*="background"],
+buy-buttons [style*="background"],
+.buy-buttons [style*="background"],
+.shopify-section--main-product [style*="background"]:not(.shopify-payment-button__button--branded) {
   background-color: #FFFFFF !important;
   background: #FFFFFF !important;
 }

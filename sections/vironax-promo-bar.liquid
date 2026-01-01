@@ -11,6 +11,7 @@
     --promo-margin-top: {{ section.settings.margin_top }}px;
     --promo-margin-bottom: {{ section.settings.margin_bottom }}px;
     --promo-bg-opacity: {{ section.settings.background_opacity | divided_by: 100.0 }};
+    --promo-scroll-speed: {{ section.settings.scroll_speed }}s;
   }
 
   {% if section.settings.enable_sticky %}
@@ -18,7 +19,7 @@
       position: fixed;
       left: 0;
       right: 0;
-      z-index: {{ section.settings.z_index | default: 1002 }};
+      z-index: {{ section.settings.z_index | default: 999 }};
       {% if section.settings.sticky_position == 'top' %}
         top: {{ section.settings.sticky_offset }}px;
       {% else %}
@@ -26,19 +27,28 @@
       {% endif %}
     }
   {% endif %}
+
+  /* Desktop only */
+  {% if section.settings.show_on == 'desktop_only' %}
+  @media screen and (max-width: 699px) {
+    #shopify-section-{{ section.id }} {
+      display: none !important;
+    }
+  }
+  {% endif %}
+
+  /* Mobile only */
+  {% if section.settings.show_on == 'mobile_only' %}
+  @media screen and (min-width: 700px) {
+    #shopify-section-{{ section.id }} {
+      display: none !important;
+    }
+  }
+  {% endif %}
 </style>
 
-<div
-  class="vironax-promo-bar"
-  data-sticky="{{ section.settings.enable_sticky }}"
-  data-position="{{ section.settings.sticky_position }}"
-  {% if section.settings.show_on == 'desktop_only' %}
-    style="display: block;"
-  {% elsif section.settings.show_on == 'mobile_only' %}
-    style="display: block;"
-  {% endif %}
->
-  <div class="vironax-promo-bar__track" style="animation-duration: {{ section.settings.scroll_speed }}s;">
+<div class="vironax-promo-bar" data-sticky="{{ section.settings.enable_sticky }}" data-position="{{ section.settings.sticky_position }}">
+  <div class="vironax-promo-bar__track">
     {% for i in (1..3) %}
       <div class="vironax-promo-bar__content">
         {% if section.settings.message_1 != blank %}
@@ -72,47 +82,50 @@
 
 <style>
   .vironax-promo-bar {
-    background-color: rgba(var(--text-color), var(--promo-bg-opacity, 1));
-    color: rgb(var(--background));
+    background-color: {{ section.settings.background_color | default: '#000000' }};
+    color: {{ section.settings.text_color | default: '#FFFFFF' }};
     overflow: hidden;
-    padding-top: var(--promo-padding-top, var(--spacing-sm));
-    padding-bottom: var(--promo-padding-bottom, var(--spacing-sm));
+    padding-top: var(--promo-padding-top, 10px);
+    padding-bottom: var(--promo-padding-bottom, 10px);
     margin-top: var(--promo-margin-top, 0);
     margin-bottom: var(--promo-margin-bottom, 0);
     position: relative;
+    width: 100%;
   }
 
   .vironax-promo-bar__track {
     display: flex;
-    animation: vironax-scroll 30s linear infinite;
-    width: fit-content;
+    animation: vironax-promo-scroll var(--promo-scroll-speed, 30s) linear infinite;
+    width: max-content;
   }
 
   .vironax-promo-bar__content {
     display: flex;
     align-items: center;
-    gap: var(--spacing-3xl);
-    padding: 0 var(--spacing-lg);
+    gap: {{ section.settings.item_gap | default: 60 }}px;
+    padding: 0 {{ section.settings.item_gap | default: 60 | divided_by: 2 }}px;
     flex-shrink: 0;
   }
 
   .vironax-promo-bar__item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    font-family: var(--text-font-family);
-    font-size: {{ section.settings.font_size }}px;
-    font-weight: {{ section.settings.font_weight }};
-    text-transform: {{ section.settings.text_transform }};
-    letter-spacing: {{ section.settings.letter_spacing }}em;
+    gap: 8px;
+    font-family: var(--text-font-family, 'Montserrat', sans-serif);
+    font-size: {{ section.settings.font_size | default: 14 }}px;
+    font-weight: {{ section.settings.font_weight | default: '500' }};
+    text-transform: {{ section.settings.text_transform | default: 'uppercase' }};
+    letter-spacing: {{ section.settings.letter_spacing | default: 0.1 }}em;
     white-space: nowrap;
   }
 
   .vironax-promo-bar__item svg {
     flex-shrink: 0;
+    width: 16px;
+    height: 16px;
   }
 
-  @keyframes vironax-scroll {
+  @keyframes vironax-promo-scroll {
     0% {
       transform: translateX(0);
     }
@@ -125,32 +138,19 @@
     animation-play-state: paused;
   }
 
-  /* Desktop only */
-  {% if section.settings.show_on == 'desktop_only' %}
-  @media screen and (max-width: 699px) {
-    #shopify-section-{{ section.id }} {
-      display: none !important;
-    }
-  }
-  {% endif %}
-
-  /* Mobile only */
-  {% if section.settings.show_on == 'mobile_only' %}
-  @media screen and (min-width: 700px) {
-    #shopify-section-{{ section.id }} {
-      display: none !important;
-    }
-  }
-  {% endif %}
-
   @media screen and (max-width: 699px) {
     .vironax-promo-bar__item {
       font-size: {{ section.settings.font_size_mobile | default: 11 }}px;
     }
 
     .vironax-promo-bar__content {
-      gap: var(--spacing-xl);
-      padding: 0 var(--spacing-md);
+      gap: 40px;
+      padding: 0 20px;
+    }
+
+    .vironax-promo-bar__item svg {
+      width: 14px;
+      height: 14px;
     }
   }
 
@@ -159,6 +159,7 @@
   .vironax-promo-bar[data-sticky="true"] {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    background-color: {{ section.settings.background_color | default: '#000000' | color_modify: 'alpha', 0.9 }};
   }
   {% endif %}
 </style>
@@ -188,6 +189,22 @@
       "id": "message_3",
       "label": "Message 3",
       "default": "Pay in 4 with Tamara & Tabby"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",
@@ -242,15 +259,6 @@
       "default": "all"
     },
     {
-      "type": "range",
-      "id": "background_opacity",
-      "label": "Background opacity (%)",
-      "min": 50,
-      "max": 100,
-      "step": 5,
-      "default": 100
-    },
-    {
       "type": "checkbox",
       "id": "enable_blur",
       "label": "Enable blur effect when sticky",
@@ -269,6 +277,16 @@
       "max": 60,
       "step": 5,
       "default": 30
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap between items",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
     },
     {
       "type": "header",
