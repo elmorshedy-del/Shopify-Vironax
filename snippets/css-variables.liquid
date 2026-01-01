@@ -34,6 +34,42 @@ note that this may have impact on different places.
   {%- endif -%}
 
   :root {
+    /* ================================================================
+       UNIFIED SPACING SCALE - For visual harmony across all sections
+       ================================================================ */
+    --spacing-xs: 0.5rem;    /* 8px */
+    --spacing-sm: 1rem;      /* 16px */
+    --spacing-md: 1.5rem;    /* 24px */
+    --spacing-lg: 2rem;      /* 32px */
+    --spacing-xl: 2.5rem;    /* 40px */
+    --spacing-2xl: 3rem;     /* 48px */
+    --spacing-3xl: 4rem;     /* 64px */
+    --spacing-4xl: 5rem;     /* 80px */
+
+    /* ================================================================
+       VIRONAX SECTION SPACING - Harmonized section padding
+       ================================================================ */
+    --vironax-section-padding-mobile: var(--spacing-3xl);      /* 64px on mobile */
+    --vironax-section-padding-tablet: var(--spacing-4xl);      /* 80px on tablet */
+    --vironax-section-padding-desktop: 6rem;                   /* 96px on desktop */
+    --vironax-section-gutter-mobile: 4%;
+    --vironax-section-gutter-tablet: 5%;
+    --vironax-section-gutter-desktop: 5%;
+    --vironax-container-max-width: 85rem;                      /* 1360px - matches theme */
+
+    /* ================================================================
+       HARMONIZED COMPONENT SPACING
+       ================================================================ */
+    --vironax-gap-xs: var(--spacing-xs);     /* 8px - for tight spacing */
+    --vironax-gap-sm: var(--spacing-sm);     /* 16px - for small gaps */
+    --vironax-gap-md: var(--spacing-md);     /* 24px - for medium gaps */
+    --vironax-gap-lg: var(--spacing-xl);     /* 40px - for section headers */
+    --vironax-gap-xl: var(--spacing-3xl);    /* 64px - for large content gaps */
+
+    /* Default mobile values */
+    --vironax-section-padding: var(--vironax-section-padding-mobile);
+    --vironax-section-gutter: var(--vironax-section-gutter-mobile);
+
     /* Container */
     --container-max-width: 100%;
     --container-xxs-max-width: 27.5rem; /* 440px */
@@ -147,6 +183,10 @@ note that this may have impact on different places.
 
       /* Spacing settings */
       --container-gutter: 2rem;
+
+      /* Vironax section padding - tablet */
+      --vironax-section-padding: var(--vironax-section-padding-tablet);
+      --vironax-section-gutter: var(--vironax-section-gutter-tablet);
     }
   }
 
@@ -160,6 +200,10 @@ note that this may have impact on different places.
 
       --section-stack-gap: {%- if settings.section_vertical_spacing == 'xs' %}2.25rem{% elsif settings.section_vertical_spacing == 'sm' %}2.5rem{% elsif settings.section_vertical_spacing == 'md' %}3rem{% else %}4rem{% endif %};
       --section-stack-gap-tight: {%- if settings.section_vertical_spacing == 'xs' %}2.25rem{% elsif settings.section_vertical_spacing == 'sm' %}2.5rem{% elsif settings.section_vertical_spacing == 'md' %}3rem{% else %}4rem{% endif %};
+
+      /* Vironax section padding - desktop */
+      --vironax-section-padding: var(--vironax-section-padding-desktop);
+      --vironax-section-gutter: var(--vironax-section-gutter-desktop);
     }
   }
 

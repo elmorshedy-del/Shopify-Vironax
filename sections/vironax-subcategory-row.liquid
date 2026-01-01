@@ -30,57 +30,57 @@
 
 <style>
   .vironax-subcategories {
-    padding: 60px 5%;
-    background-color: #FFFFFF;
-    max-width: 1400px;
+    padding: var(--spacing-3xl) var(--vironax-section-gutter);
+    background-color: rgb(var(--background));
+    max-width: var(--vironax-container-max-width);
     margin: 0 auto;
   }
-  
+
   .vironax-subcategories__row {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 40px;
+    gap: var(--spacing-xl);
     flex-wrap: wrap;
   }
-  
+
   .vironax-subcategories__item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: var(--spacing-sm);
     text-decoration: none;
     color: inherit;
     transition: opacity 0.3s ease;
   }
-  
+
   .vironax-subcategories__item:hover {
     opacity: 0.7;
   }
-  
+
   .vironax-subcategories__image-container {
     width: 80px;
     height: 80px;
     overflow: hidden;
-    border: 1px solid #E5E5E5;
+    border: 1px solid rgb(var(--border-color));
     transition: border-color 0.3s ease;
   }
-  
+
   .vironax-subcategories__item:hover .vironax-subcategories__image-container {
-    border-color: #000000;
+    border-color: rgb(var(--text-color));
   }
-  
+
   .vironax-subcategories__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
-  
+
   .vironax-subcategories__item:hover .vironax-subcategories__image {
     transform: scale(1.1);
   }
-  
+
   .vironax-subcategories__placeholder {
     width: 100%;
     height: 100%;
@@ -89,48 +89,40 @@
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
+    font-family: var(--heading-font-family);
+    font-size: var(--text-lg);
     font-weight: 600;
   }
-  
+
   .vironax-subcategories__title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
+    font-family: var(--text-font-family);
+    font-size: var(--text-xs);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #000000;
+    letter-spacing: var(--text-letter-spacing);
+    color: rgb(var(--text-color));
     text-align: center;
   }
-  
-  @media screen and (max-width: 989px) {
-    .vironax-subcategories {
-      padding: 50px 4%;
-    }
-    
+
+  @media screen and (max-width: 999px) {
     .vironax-subcategories__row {
-      gap: 30px;
+      gap: var(--spacing-lg);
     }
-    
+
     .vironax-subcategories__image-container {
       width: 70px;
       height: 70px;
     }
   }
-  
-  @media screen and (max-width: 749px) {
+
+  @media screen and (max-width: 699px) {
     .vironax-subcategories__row {
-      gap: 20px;
+      gap: var(--spacing-md);
     }
-    
+
     .vironax-subcategories__image-container {
       width: 60px;
       height: 60px;
-    }
-    
-    .vironax-subcategories__title {
-      font-size: 10px;
     }
   }
 </style>

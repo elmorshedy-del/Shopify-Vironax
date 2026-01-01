@@ -75,58 +75,58 @@
   .vironax-trust-badges {
     background-color: #F8F8F8;
     overflow: hidden;
-    padding: 16px 0;
-    border-top: 1px solid #E5E5E5;
-    border-bottom: 1px solid #E5E5E5;
+    padding: var(--spacing-sm) 0;
+    border-top: 1px solid rgb(var(--border-color));
+    border-bottom: 1px solid rgb(var(--border-color));
   }
-  
+
   .vironax-trust-badges__track {
     display: flex;
     animation: vironax-trust-scroll 40s linear infinite;
     width: fit-content;
   }
-  
+
   .vironax-trust-badges__content {
     display: flex;
     align-items: center;
-    gap: 50px;
-    padding: 0 25px;
+    gap: var(--spacing-2xl);
+    padding: 0 var(--spacing-md);
     flex-shrink: 0;
   }
-  
+
   .vironax-trust-badges__item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--spacing-xs);
     white-space: nowrap;
   }
-  
+
   .vironax-trust-badges__item svg {
     flex-shrink: 0;
-    color: #000000;
+    color: rgb(var(--text-color));
   }
-  
+
   .vironax-trust-badges__item span {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-family: var(--text-font-family);
+    font-size: var(--text-sm);
     font-weight: 500;
-    color: #000000;
-    letter-spacing: 0.05em;
+    color: rgb(var(--text-color));
+    letter-spacing: var(--text-letter-spacing);
   }
-  
+
   .vironax-trust-badges__text-group {
     display: flex;
     flex-direction: column;
     gap: 2px;
   }
-  
+
   .vironax-trust-badges__subtext {
-    font-size: 10px !important;
+    font-size: var(--text-xs) !important;
     font-weight: 400 !important;
-    color: #666666 !important;
+    color: rgb(var(--text-color) / 0.6) !important;
     font-style: italic;
   }
-  
+
   @keyframes vironax-trust-scroll {
     0% {
       transform: translateX(0);
@@ -135,21 +135,17 @@
       transform: translateX(-33.333%);
     }
   }
-  
+
   .vironax-trust-badges:hover .vironax-trust-badges__track {
     animation-play-state: paused;
   }
-  
-  @media screen and (max-width: 749px) {
-    .vironax-trust-badges__item span {
-      font-size: 11px;
-    }
-    
+
+  @media screen and (max-width: 699px) {
     .vironax-trust-badges__content {
-      gap: 35px;
-      padding: 0 18px;
+      gap: var(--spacing-xl);
+      padding: 0 var(--spacing-sm);
     }
-    
+
     .vironax-trust-badges__item svg {
       width: 18px;
       height: 18px;

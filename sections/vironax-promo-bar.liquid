@@ -33,43 +33,43 @@
 
 <style>
   .vironax-promo-bar {
-    background-color: #000000;
-    color: #FFFFFF;
+    background-color: rgb(var(--text-color));
+    color: rgb(var(--background));
     overflow: hidden;
-    padding: 12px 0;
+    padding: var(--spacing-sm) 0;
     position: relative;
   }
-  
+
   .vironax-promo-bar__track {
     display: flex;
     animation: vironax-scroll 30s linear infinite;
     width: fit-content;
   }
-  
+
   .vironax-promo-bar__content {
     display: flex;
     align-items: center;
-    gap: 60px;
-    padding: 0 30px;
+    gap: var(--spacing-3xl);
+    padding: 0 var(--spacing-lg);
     flex-shrink: 0;
   }
-  
+
   .vironax-promo-bar__item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    gap: var(--spacing-xs);
+    font-family: var(--text-font-family);
+    font-size: var(--text-sm);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--text-letter-spacing);
     white-space: nowrap;
   }
-  
+
   .vironax-promo-bar__item svg {
     flex-shrink: 0;
   }
-  
+
   @keyframes vironax-scroll {
     0% {
       transform: translateX(0);
@@ -78,19 +78,19 @@
       transform: translateX(-33.333%);
     }
   }
-  
+
   .vironax-promo-bar:hover .vironax-promo-bar__track {
     animation-play-state: paused;
   }
-  
-  @media screen and (max-width: 749px) {
+
+  @media screen and (max-width: 699px) {
     .vironax-promo-bar__item {
-      font-size: 10px;
+      font-size: var(--text-xs);
     }
-    
+
     .vironax-promo-bar__content {
-      gap: 40px;
-      padding: 0 20px;
+      gap: var(--spacing-xl);
+      padding: 0 var(--spacing-md);
     }
   }
 </style>
