@@ -34,87 +34,86 @@
 
 <style>
   .vironax-bundle {
-    padding: 0 5%;
-    background-color: #FFFFFF;
-    max-width: 1400px;
+    padding: 0 var(--vironax-section-gutter);
+    background-color: rgb(var(--background));
+    max-width: var(--vironax-container-max-width);
     margin: 0 auto;
   }
-  
+
   .vironax-bundle__container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: #F8F8F8;
     overflow: hidden;
   }
-  
+
   .vironax-bundle__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 60px;
+    padding: var(--spacing-3xl);
   }
-  
+
   .vironax-bundle__label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
+    font-family: var(--text-font-family);
+    font-size: var(--text-xs);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #666666;
-    margin-bottom: 16px;
+    letter-spacing: var(--heading-letter-spacing);
+    color: rgb(var(--text-color) / 0.6);
+    margin-bottom: var(--spacing-sm);
   }
-  
+
   .vironax-bundle__headline {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(32px, 4vw, 48px);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #000000;
-    margin: 0 0 20px 0;
+    font-family: var(--heading-font-family);
+    font-size: var(--text-h1);
+    font-weight: var(--heading-font-weight);
+    text-transform: var(--heading-text-transform);
+    letter-spacing: var(--heading-letter-spacing);
+    color: rgb(var(--text-color));
+    margin: 0 0 var(--spacing-lg) 0;
     line-height: 1.1;
   }
-  
+
   .vironax-bundle__description {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-family: var(--text-font-family);
+    font-size: var(--text-base);
     font-weight: 400;
-    color: #333333;
+    color: rgb(var(--text-color) / 0.8);
     line-height: 1.6;
-    margin: 0 0 32px 0;
+    margin: 0 0 var(--spacing-lg) 0;
   }
-  
+
   .vironax-bundle__button {
     display: inline-block;
     align-self: flex-start;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #FFFFFF;
-    background-color: #000000;
-    padding: 16px 40px;
+    font: var(--button-font);
+    text-transform: var(--button-text-transform);
+    letter-spacing: var(--button-letter-spacing);
+    color: rgb(var(--button-text-color));
+    background-color: rgb(var(--button-background));
+    padding: var(--spacing-sm) var(--spacing-xl);
     text-decoration: none;
     transition: opacity 0.3s ease;
+    border-radius: var(--button-border-radius);
   }
-  
+
   .vironax-bundle__button:hover {
     opacity: 0.8;
   }
-  
+
   .vironax-bundle__image-container {
     position: relative;
     overflow: hidden;
   }
-  
+
   .vironax-bundle__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     min-height: 400px;
   }
-  
+
   .vironax-bundle__placeholder {
     width: 100%;
     height: 100%;
@@ -124,42 +123,38 @@
     align-items: center;
     justify-content: center;
     color: #666666;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-family: var(--heading-font-family);
+    font-size: var(--text-base);
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: var(--heading-letter-spacing);
   }
-  
-  @media screen and (max-width: 989px) {
+
+  @media screen and (max-width: 999px) {
     .vironax-bundle__container {
       grid-template-columns: 1fr;
     }
-    
+
     .vironax-bundle__content {
-      padding: 50px 40px;
+      padding: var(--spacing-xl);
       order: 2;
     }
-    
+
     .vironax-bundle__image-container {
       order: 1;
     }
-    
+
     .vironax-bundle__image,
     .vironax-bundle__placeholder {
       min-height: 300px;
     }
   }
-  
-  @media screen and (max-width: 749px) {
-    .vironax-bundle {
-      padding: 0 4%;
-    }
-    
+
+  @media screen and (max-width: 699px) {
     .vironax-bundle__content {
-      padding: 40px 24px;
+      padding: var(--spacing-lg) var(--spacing-md);
       text-align: center;
     }
-    
+
     .vironax-bundle__button {
       align-self: center;
     }

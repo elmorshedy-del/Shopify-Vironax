@@ -71,36 +71,36 @@
 
 <style>
   .vironax-reviews {
-    padding: 80px 5%;
-    background-color: #FFFFFF;
-    max-width: 1400px;
+    padding: var(--vironax-section-padding) var(--vironax-section-gutter);
+    background-color: rgb(var(--background));
+    max-width: var(--vironax-container-max-width);
     margin: 0 auto;
   }
-  
+
   .vironax-reviews__header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: var(--vironax-gap-lg);
   }
-  
+
   .vironax-reviews__title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;  /* Make it bigger */
-    font-weight: 700;  /* Make it bolder */;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #000000;
-    margin: 0 0 8px 0;
+    font-family: var(--heading-font-family);
+    font-size: var(--text-h2);
+    font-weight: var(--heading-font-weight);
+    text-transform: var(--heading-text-transform);
+    letter-spacing: var(--heading-letter-spacing);
+    color: rgb(var(--text-color));
+    margin: 0 0 var(--spacing-xs) 0;
   }
-  
+
   .vironax-reviews__subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;  /* Make it bigger */
-    font-weight: 500;  /* Make it slightly bolder */
-    color: #666666;
+    font-family: var(--text-font-family);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: rgb(var(--text-color) / 0.6);
     margin: 0;
-    letter-spacing: 0.05em;
+    letter-spacing: var(--text-letter-spacing);
   }
-  
+
   .vironax-reviews__video-container {
     position: relative;
     aspect-ratio: 9/16;
@@ -108,13 +108,13 @@
     margin: 0 auto;
     overflow: hidden;
   }
-  
+
   .vironax-reviews__video {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
+
   .vironax-reviews__placeholder {
     width: 100%;
     height: 100%;
@@ -123,12 +123,12 @@
     align-items: center;
     justify-content: center;
     color: #666666;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    font-family: var(--heading-font-family);
+    font-size: var(--text-base);
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: var(--heading-letter-spacing);
   }
-  
+
   .vironax-reviews__overlay {
     position: absolute;
     top: 0;
@@ -144,7 +144,7 @@
     pointer-events: none;
     transition: background 0.4s ease;
   }
-  
+
   .vironax-reviews__video-container:hover .vironax-reviews__overlay {
     background: linear-gradient(
       to top,
@@ -153,47 +153,47 @@
       rgba(0, 0, 0, 0.1) 100%
     );
   }
-  
+
   .vironax-reviews__content {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 40px;
+    padding: var(--spacing-xl);
     z-index: 2;
     text-decoration: none;
     color: inherit;
     display: block;
   }
-  
+
   .vironax-reviews__stars {
     display: flex;
     justify-content: center;
     gap: 4px;
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-sm);
     color: #FFFFFF;
   }
-  
+
   .vironax-reviews__review-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(20px, 3vw, 28px);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    font-family: var(--heading-font-family);
+    font-size: var(--text-h3);
+    font-weight: var(--heading-font-weight);
+    text-transform: var(--heading-text-transform);
+    letter-spacing: var(--heading-letter-spacing);
     color: #FFFFFF;
-    margin: 0 0 12px 0;
+    margin: 0 0 var(--spacing-sm) 0;
     text-align: center;
   }
-  
+
   .vironax-reviews__cta {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    gap: var(--spacing-xs);
+    font-family: var(--text-font-family);
+    font-size: var(--text-sm);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--text-letter-spacing);
     color: #FFFFFF;
     opacity: 0;
     transform: translateY(10px);
@@ -202,17 +202,17 @@
     width: fit-content;
     display: flex;
   }
-  
+
   .vironax-reviews__content:hover .vironax-reviews__cta {
     opacity: 1;
     transform: translateY(0);
   }
-  
+
   /* Mute Button */
   .vironax-reviews__mute-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
     width: 48px;
     height: 48px;
     background: rgba(0, 0, 0, 0.6);
@@ -225,41 +225,37 @@
     z-index: 3;
     transition: all 0.3s ease;
   }
-  
+
   .vironax-reviews__mute-btn:hover {
     background: rgba(0, 0, 0, 0.8);
     border-color: rgba(255, 255, 255, 0.5);
   }
-  
+
   .vironax-reviews__mute-btn svg {
     color: #FFFFFF;
   }
-  
-  @media screen and (max-width: 749px) {
-    .vironax-reviews {
-      padding: 60px 4%;
-    }
-    
+
+  @media screen and (max-width: 699px) {
     .vironax-reviews__video-container {
       max-width: 100%;
     }
-    
+
     .vironax-reviews__content {
-      padding: 24px;
+      padding: var(--spacing-md);
     }
-    
+
     .vironax-reviews__cta {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     .vironax-reviews__mute-btn {
       width: 40px;
       height: 40px;
-      top: 16px;
-      right: 16px;
+      top: var(--spacing-sm);
+      right: var(--spacing-sm);
     }
-    
+
     .vironax-reviews__mute-btn svg {
       width: 20px;
       height: 20px;
