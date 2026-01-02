@@ -6,6 +6,48 @@ may have important consequence on the section itself.
 ------------------------------------------------------------------------------------------------------------------------
 {%- endcomment -%}
 
+<style>
+  #shopify-section-{{ section.id }} {
+    --slideshow-heading-size-desktop: {{ section.settings.heading_size_desktop | default: 48 }}px;
+    --slideshow-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 28 }}px;
+    --slideshow-subheading-size-desktop: {{ section.settings.subheading_size_desktop | default: 14 }}px;
+    --slideshow-subheading-size-mobile: {{ section.settings.subheading_size_mobile | default: 12 }}px;
+    --slideshow-heading-weight: {{ section.settings.heading_weight | default: '600' }};
+  }
+
+  #shopify-section-{{ section.id }} .slideshow__slide-content .h1,
+  #shopify-section-{{ section.id }} .slideshow__slide-content .h2 {
+    font-size: var(--slideshow-heading-size-mobile) !important;
+    font-weight: var(--slideshow-heading-weight) !important;
+    line-height: 1.2 !important;
+    {%- if section.settings.enable_text_shadow -%}
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    {%- endif -%}
+  }
+
+  #shopify-section-{{ section.id }} .slideshow__slide-content .h6,
+  #shopify-section-{{ section.id }} .slideshow__slide-content p:not(.h1):not(.h2) {
+    font-size: var(--slideshow-subheading-size-mobile) !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    {%- if section.settings.enable_text_shadow -%}
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+    {%- endif -%}
+  }
+
+  @media screen and (min-width: 700px) {
+    #shopify-section-{{ section.id }} .slideshow__slide-content .h1,
+    #shopify-section-{{ section.id }} .slideshow__slide-content .h2 {
+      font-size: var(--slideshow-heading-size-desktop) !important;
+    }
+
+    #shopify-section-{{ section.id }} .slideshow__slide-content .h6,
+    #shopify-section-{{ section.id }} .slideshow__slide-content p:not(.h1):not(.h2) {
+      font-size: var(--slideshow-subheading-size-desktop) !important;
+    }
+  }
+</style>
+
 {%- if section.blocks.size > 0 -%}
   {%- assign carousel_id = 'carousel-' | append: section.id -%}
 
@@ -279,6 +321,69 @@ may have important consequence on the section itself.
       "label": "t:sections.slideshow.controls_color",
       "info": "t:sections.slideshow.controls_color_info",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Text Styling"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size (desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 18,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size (mobile)",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_text_shadow",
+      "label": "Enable text shadow",
+      "info": "Adds shadow for better readability on images",
+      "default": true
     }
   ],
   "blocks": [

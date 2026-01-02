@@ -1,0 +1,456 @@
+/**
+ * VironaX Theme Comprehensive Fixes
+ * Version: 2.0
+ * Fixes: Language/Currency selectors, Menu hover, Promo visibility, Shop button
+ */
+
+/* ===========================================
+   1. LANGUAGE/CURRENCY SELECTOR FIXES (CRITICAL)
+   =========================================== */
+
+/* Toggle Button - Ensure visibility on all header backgrounds */
+.vironax-localization-toggle,
+.localization-toggle,
+.header .localization-toggle,
+.header__secondary-nav .localization-toggle,
+.localization-selectors button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 8px 12px !important;
+  background-color: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s ease !important;
+  font-family: var(--heading-font-family), 'Montserrat', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: inherit !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Ensure the icon is visible */
+.vironax-localization-toggle svg,
+.localization-toggle svg,
+.header .localization-toggle svg {
+  width: 12px !important;
+  height: 12px !important;
+  color: currentColor !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  flex-shrink: 0 !important;
+}
+
+.vironax-localization-toggle:hover,
+.localization-toggle:hover {
+  opacity: 0.7 !important;
+}
+
+/* Popover/Dropdown Container - WHITE MODERN BACKGROUND */
+.vironax-popover,
+.popover.vironax-popover,
+x-popover.vironax-popover,
+x-popover.popover,
+.localization-selectors x-popover,
+.header x-popover[id*="localization"] {
+  --popover-background: #FFFFFF !important;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E5E5 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12) !important;
+  padding: 0 !important;
+  min-width: 280px !important;
+  max-height: 420px !important;
+  overflow: hidden !important;
+  z-index: 9999 !important;
+  position: absolute !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Popover when open - Ensure visibility */
+x-popover[open],
+x-popover.is-open,
+.vironax-popover[open],
+.vironax-popover.is-open {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Popover Header */
+.vironax-popover-header,
+.vironax-popover [slot="header"],
+x-popover .h4[slot="header"],
+x-popover .h5[slot="header"] {
+  padding: 16px 20px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #E5E5E5 !important;
+  font-family: var(--heading-font-family), 'Montserrat', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  color: #000000 !important;
+  background-color: #FFFFFF !important;
+}
+
+/* Country/Locale List Container */
+.vironax-country-list,
+.vironax-locale-list,
+.popover__value-list,
+x-popover x-listbox,
+x-popover .popover__value-list {
+  max-height: 340px !important;
+  overflow-y: auto !important;
+  padding: 8px 0 !important;
+  background-color: #FFFFFF !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: #CCCCCC #F5F5F5 !important;
+}
+
+/* Custom scrollbar for webkit browsers */
+.vironax-country-list::-webkit-scrollbar,
+.vironax-locale-list::-webkit-scrollbar,
+.popover__value-list::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.vironax-country-list::-webkit-scrollbar-track,
+.vironax-locale-list::-webkit-scrollbar-track,
+.popover__value-list::-webkit-scrollbar-track {
+  background: #F5F5F5 !important;
+}
+
+.vironax-country-list::-webkit-scrollbar-thumb,
+.vironax-locale-list::-webkit-scrollbar-thumb,
+.popover__value-list::-webkit-scrollbar-thumb {
+  background: #CCCCCC !important;
+  border-radius: 3px !important;
+}
+
+/* Option Buttons - WHITE BACKGROUND with proper styling */
+.vironax-country-option,
+.vironax-locale-option,
+.popover__value-option,
+x-popover button[type="submit"],
+x-popover [role="option"] {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  padding: 12px 20px !important;
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+  font-family: var(--text-font-family), 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #333333 !important;
+  text-align: left !important;
+}
+
+.vironax-country-option:hover,
+.vironax-locale-option:hover,
+.popover__value-option:hover,
+x-popover button[type="submit"]:hover,
+x-popover [role="option"]:hover {
+  background: #F8F8F8 !important;
+  background-color: #F8F8F8 !important;
+}
+
+.vironax-country-option[aria-selected="true"],
+.vironax-locale-option[aria-selected="true"],
+.popover__value-option[aria-selected="true"],
+x-popover [role="option"][aria-selected="true"] {
+  background: #F0F0F0 !important;
+  background-color: #F0F0F0 !important;
+  font-weight: 500 !important;
+}
+
+/* Checkmark for selected item */
+.vironax-country-option[aria-selected="true"]::after,
+.vironax-locale-option[aria-selected="true"]::after,
+x-popover [role="option"][aria-selected="true"]::after {
+  content: '✓' !important;
+  margin-left: auto !important;
+  color: #000000 !important;
+  font-size: 14px !important;
+}
+
+/* Flag Emoji styling */
+.country-flag-emoji,
+.vironax-flag {
+  font-size: 18px !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Country flag image styling */
+.country-flag,
+.vironax-country-option .country-flag {
+  width: 24px !important;
+  height: 16px !important;
+  object-fit: cover !important;
+  border-radius: 2px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Override any color scheme variables */
+.vironax-popover,
+.vironax-popover *,
+x-popover.vironax-popover *,
+x-popover[id*="localization"],
+x-popover[id*="localization"] * {
+  --background: 255 255 255 !important;
+  --text-color: 51 51 51 !important;
+}
+
+/* ===========================================
+   2. HEADER MENU HOVER FIX
+   =========================================== */
+
+/* Fix dropdown staying open after hover ends */
+.header__menu-disclosure {
+  position: relative;
+}
+
+.header__menu-disclosure > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.header__menu-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Ensure dropdown closes properly when not hovered */
+.header__menu-disclosure:not(:hover):not(:focus-within) > .header__dropdown-menu,
+.header__menu-disclosure:not(:hover):not(:focus-within) > .mega-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+/* When hovering, show the dropdown */
+.header__menu-disclosure:hover > .header__dropdown-menu,
+.header__menu-disclosure:focus-within > .header__dropdown-menu,
+.header__menu-disclosure:hover > .mega-menu,
+.header__menu-disclosure:focus-within > .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Force close when details is not open and not hovered */
+dropdown-menu-disclosure:not(:hover) details:not([open]) .header__dropdown-menu,
+mega-menu-disclosure:not(:hover) details:not([open]) .mega-menu {
+  display: none !important;
+}
+
+/* Smooth transition for menu items */
+.header__dropdown-menu,
+.mega-menu {
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+/* Menu item styling controls */
+.header__primary-nav-item > a,
+.header__primary-nav-item > details > summary {
+  font-size: var(--header-menu-font-size, 13px) !important;
+  font-weight: var(--header-menu-font-weight, 500) !important;
+  letter-spacing: var(--header-menu-letter-spacing, 0.05em) !important;
+  padding: var(--header-menu-padding, 8px 14px) !important;
+  white-space: nowrap;
+}
+
+/* Prevent menu items from cluttering */
+.header__primary-nav {
+  gap: var(--header-menu-gap, 4px) !important;
+}
+
+@media screen and (max-width: 1200px) {
+  .header__primary-nav-item > a,
+  .header__primary-nav-item > details > summary {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+
+  .header__primary-nav {
+    gap: 2px !important;
+  }
+}
+
+/* ===========================================
+   3. PROMO BAR VISIBILITY FIX
+   =========================================== */
+
+/* Fix promo bar visibility when using CSS variables */
+.vironax-promo-bar {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+/* If using theme colors, provide fallbacks */
+.vironax-promo-bar__item {
+  color: #FFFFFF !important;
+}
+
+.vironax-promo-bar__item svg {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+
+/* Ensure the track is visible */
+.vironax-promo-bar__track {
+  display: flex !important;
+  visibility: visible !important;
+}
+
+/* ===========================================
+   4. SHOP BUTTON / SIZE CHART STYLING FIX
+   =========================================== */
+
+/* Size Chart Link - Clean, modern styling */
+.variant-picker__option-info .link,
+button[aria-controls*="size-chart"],
+a[href*="size-chart"],
+.size-chart-button,
+.size-guide-link {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #000000 !important;
+  text-decoration: underline !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
+.variant-picker__option-info .link:hover,
+button[aria-controls*="size-chart"]:hover {
+  color: #666666 !important;
+  text-decoration: underline !important;
+}
+
+/* Modal for size chart - white background */
+x-modal[id*="size-chart"],
+.modal[id*="size-chart"] {
+  --background: 255 255 255 !important;
+  background-color: #FFFFFF !important;
+}
+
+x-modal[id*="size-chart"] .prose,
+.modal[id*="size-chart"] .prose {
+  background-color: #FFFFFF !important;
+  color: #333333 !important;
+}
+
+/* ===========================================
+   5. SLIDESHOW / HERO TEXT CONTROLS
+   =========================================== */
+
+/* Better text visibility on slideshow */
+.slideshow__slide-content .prose {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.slideshow__slide-content .h1,
+.slideshow__slide-content .h2,
+.slideshow__slide-content .h3 {
+  font-size: var(--slideshow-heading-size, clamp(1.75rem, 4vw, 3.5rem)) !important;
+  font-weight: var(--slideshow-heading-weight, 600) !important;
+  line-height: 1.2 !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.slideshow__slide-content .h6,
+.slideshow__slide-content p:not(.h1):not(.h2):not(.h3) {
+  font-size: var(--slideshow-subheading-size, clamp(0.875rem, 1.5vw, 1.125rem)) !important;
+  font-weight: var(--slideshow-subheading-weight, 400) !important;
+  letter-spacing: 0.1em !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile responsive text */
+@media screen and (max-width: 699px) {
+  .slideshow__slide-content .h1,
+  .slideshow__slide-content .h2 {
+    font-size: clamp(1.5rem, 6vw, 2.25rem) !important;
+  }
+
+  .slideshow__slide-content .h6 {
+    font-size: 0.8125rem !important;
+  }
+
+  .slideshow__slide-content .prose {
+    padding: 16px !important;
+  }
+}
+
+/* ===========================================
+   6. MOBILE OPTIMIZATIONS
+   =========================================== */
+
+@media screen and (max-width: 699px) {
+  /* Localization selectors on mobile */
+  .vironax-popover {
+    min-width: 280px !important;
+    max-width: calc(100vw - 32px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .vironax-country-option,
+  .vironax-locale-option {
+    padding: 14px 16px !important;
+    font-size: 14px !important;
+  }
+
+  /* Header menu on mobile - hide desktop nav */
+  .header__primary-nav > ul {
+    display: none !important;
+  }
+
+  /* Promo bar mobile sizing */
+  .vironax-promo-bar__item {
+    font-size: 11px !important;
+  }
+}
+
+/* ===========================================
+   7. RTL SUPPORT
+   =========================================== */
+
+[dir="rtl"] .vironax-country-option,
+[dir="rtl"] .vironax-locale-option {
+  text-align: right !important;
+  flex-direction: row-reverse !important;
+}
+
+[dir="rtl"] .vironax-country-option[aria-selected="true"]::after,
+[dir="rtl"] .vironax-locale-option[aria-selected="true"]::after {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+[dir="rtl"] .header__primary-nav {
+  flex-direction: row-reverse !important;
+}
