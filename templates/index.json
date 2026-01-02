@@ -9,43 +9,6 @@
  */
 {
   "sections": {
-    "17659621619d46fb26": {
-      "type": "apps",
-      "settings": {
-        "color_scheme": "scheme-4",
-        "separate_section_with_border": false,
-        "remove_vertical_spacing": true,
-        "remove_horizontal_spacing": true
-      }
-    },
-    "featured-collections": {
-      "type": "featured-collections",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "separate_section_with_border": false,
-        "hide_product_information": false,
-        "stack_products": false,
-        "products_per_row_mobile": "2",
-        "products_per_row_desktop": 4,
-        "horizontal_spacing_factor": 1,
-        "vertical_spacing_factor": 1,
-        "subheading": ""
-      }
-    },
-    "featured_collections_MAXDTX": {
-      "type": "featured-collections",
-      "settings": {
-        "color_scheme": "scheme-3",
-        "separate_section_with_border": false,
-        "hide_product_information": false,
-        "stack_products": false,
-        "products_per_row_mobile": "2",
-        "products_per_row_desktop": 4,
-        "horizontal_spacing_factor": 1,
-        "vertical_spacing_factor": 1,
-        "subheading": ""
-      }
-    },
     "vironax_hero_KTXMcY": {
       "type": "vironax-hero",
       "blocks": {
@@ -371,9 +334,6 @@
     }
   },
   "order": [
-    "17659621619d46fb26",
-    "featured-collections",
-    "featured_collections_MAXDTX",
     "vironax_hero_KTXMcY",
     "vironax_trust_badges_wTYGne",
     "vironax_trending_products_etqBVg",
