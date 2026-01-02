@@ -1,1 +1,107 @@
-{"sections":{"slideshow_tpmGg":{"type":"slideshow","disabled":false,"settings":{"allow_transparent_header":true,"show_next_section_button":false,"media_size":"auto","show_initial_transition":false,"autoplay":true,"autoplay_pause_on_video":true,"cycle_speed":5,"header-3528073eac5b224777f81baad18ca385":null,"background":"#000000","controls_color":"#ffffff"},"blocks":{"image_kL9Nj":{"type":"image","disabled":false,"settings":{"image":"shopify:\/\/shop_images\/Cultural-Finaaaal-mobile.png","mobile_image":null,"header-3018b83f2a8fbbb9b68c6655cd0d5854":null,"subheading":"","title":"","mobile_text_position":"place-self-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","content_max_width":780,"header-33823e292641d5b252879b0eacc89610":null,"button_1_text":"","button_1_link":"","button_1_style":"solid","button_1_background":"#ffffff","button_1_text_color":"#000000","header-f32fd39bb86d0fb370a5604ddf085d5b":null,"button_2_text":"","button_2_link":"","button_2_style":"outline","button_2_background":"#ffffff","button_2_text_color":"#000000","header-b86c9325341dc7436b3ca4664b2a6eb3":null,"background":"","background_opacity":50,"text_color":"#ffffff","border_color":"","gradient_overlay":"linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"}},"image_xJq88":{"type":"image","disabled":false,"settings":{"image":"shopify:\/\/shop_images\/ring-focused-for-mobile.png","mobile_image":"shopify:\/\/shop_images\/ring-focused-for-mobile.png","header-9779078078d15c84bc8308cd0bf13cbf":null,"subheading":"","title":"","mobile_text_position":"place-self-center text-center","desktop_text_position":"sm:place-self-center sm:text-center","content_max_width":780,"header-4a448885abaef154d4f1a896e077db76":null,"button_1_text":"","button_1_link":"","button_1_style":"solid","button_1_background":"#ffffff","button_1_text_color":"#000000","header-eb5d469ce374c4c2fff7d540f9e243b3":null,"button_2_text":"","button_2_link":"","button_2_style":"outline","button_2_background":"#ffffff","button_2_text_color":"#000000","header-8487d5b9f5e78199e99f0b97e453f9e6":null,"background":"","background_opacity":50,"text_color":"#ffffff","border_color":"","gradient_overlay":"linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"}}},"block_order":["image_kL9Nj","image_xJq88"],"name":"t:sections.slideshow.presets.slideshow.name"}},"context":{"market":"oman"},"parent":"index.json","order":["17659621619d46fb26","slideshow_tpmGg","featured-collections","featured_collections_MAXDTX"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_tpmGg": {
+      "type": "slideshow",
+      "disabled": false,
+      "settings": {
+        "allow_transparent_header": true,
+        "show_next_section_button": false,
+        "media_size": "auto",
+        "show_initial_transition": false,
+        "autoplay": true,
+        "autoplay_pause_on_video": true,
+        "cycle_speed": 5,
+        "header-3528073eac5b224777f81baad18ca385": null,
+        "background": "#000000",
+        "controls_color": "#ffffff"
+      },
+      "blocks": {
+        "image_kL9Nj": {
+          "type": "image",
+          "disabled": false,
+          "settings": {
+            "image": "shopify://shop_images/Cultural-Finaaaal-mobile.png",
+            "mobile_image": null,
+            "header-3018b83f2a8fbbb9b68c6655cd0d5854": null,
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "header-33823e292641d5b252879b0eacc89610": null,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "header-f32fd39bb86d0fb370a5604ddf085d5b": null,
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "header-b86c9325341dc7436b3ca4664b2a6eb3": null,
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        },
+        "image_xJq88": {
+          "type": "image",
+          "disabled": false,
+          "settings": {
+            "image": "shopify://shop_images/ring-focused-for-mobile.png",
+            "mobile_image": "shopify://shop_images/ring-focused-for-mobile.png",
+            "header-9779078078d15c84bc8308cd0bf13cbf": null,
+            "subheading": "",
+            "title": "",
+            "mobile_text_position": "place-self-center text-center",
+            "desktop_text_position": "sm:place-self-center sm:text-center",
+            "content_max_width": 780,
+            "header-4a448885abaef154d4f1a896e077db76": null,
+            "button_1_text": "",
+            "button_1_link": "",
+            "button_1_style": "solid",
+            "button_1_background": "#ffffff",
+            "button_1_text_color": "#000000",
+            "header-eb5d469ce374c4c2fff7d540f9e243b3": null,
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_style": "outline",
+            "button_2_background": "#ffffff",
+            "button_2_text_color": "#000000",
+            "header-8487d5b9f5e78199e99f0b97e453f9e6": null,
+            "background": "",
+            "background_opacity": 50,
+            "text_color": "#ffffff",
+            "border_color": "",
+            "gradient_overlay": "linear-gradient(180deg, rgba(NaN, NaN, NaN, 0), rgba(4, 4, 4, 0.65) 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "image_kL9Nj",
+        "image_xJq88"
+      ],
+      "name": "t:sections.slideshow.presets.slideshow.name"
+    }
+  },
+  "context": {
+    "market": "oman"
+  },
+  "parent": "index.json",
+  "order": [
+    "slideshow_tpmGg"
+  ]
+}
