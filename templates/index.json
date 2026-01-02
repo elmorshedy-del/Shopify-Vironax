@@ -56,7 +56,7 @@
         "button_link": "https://vironax.com/collections/rings",
         "text_alignment": "left",
         "enable_autoplay": true,
-        "autoplay_speed": 3500,
+        "autoplay_speed": 2000,
         "desktop_height": 80,
         "desktop_height_unit": "vh",
         "mobile_height": 70,
