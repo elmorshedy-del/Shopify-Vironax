@@ -59,6 +59,7 @@
 
     {%- comment -%}VironaX Custom Styles & Scripts{%- endcomment -%}
     {{- 'vironax-product-buy-fix.css' | asset_url | stylesheet_tag -}}
+    {{- 'vironax-theme-fixes.css' | asset_url | stylesheet_tag -}}
 
     {%- comment -%}VironaX Header & Logo Styles - Remove glow/shadow effects{%- endcomment -%}
     <style>
@@ -177,5 +178,6 @@
     {%- comment -%}VironaX Custom Scripts - Load at end of body{%- endcomment -%}
     <script src="{{ 'currency-language-persistence.js' | asset_url }}" defer></script>
     <script src="{{ 'sticky-elements.js' | asset_url }}" defer></script>
+    <script src="{{ 'vironax-localization-fix.js' | asset_url }}" defer></script>
   </body>
 </html>

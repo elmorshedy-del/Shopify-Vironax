@@ -72,14 +72,16 @@
 
 <style>
   .vironax-promo-bar {
-    background-color: rgba(var(--text-color), var(--promo-bg-opacity, 1));
-    color: rgb(var(--background));
+    background-color: {{ section.settings.background_color | default: '#000000' }};
+    color: {{ section.settings.text_color | default: '#FFFFFF' }};
     overflow: hidden;
-    padding-top: var(--promo-padding-top, var(--spacing-sm));
-    padding-bottom: var(--promo-padding-bottom, var(--spacing-sm));
+    padding-top: var(--promo-padding-top, 10px);
+    padding-bottom: var(--promo-padding-bottom, 10px);
     margin-top: var(--promo-margin-top, 0);
     margin-bottom: var(--promo-margin-bottom, 0);
     position: relative;
+    display: block;
+    visibility: visible;
   }
 
   .vironax-promo-bar__track {
@@ -110,6 +112,8 @@
 
   .vironax-promo-bar__item svg {
     flex-shrink: 0;
+    color: {{ section.settings.text_color | default: '#FFFFFF' }};
+    stroke: {{ section.settings.text_color | default: '#FFFFFF' }};
   }
 
   @keyframes vironax-scroll {
@@ -188,6 +192,22 @@
       "id": "message_3",
       "label": "Message 3",
       "default": "Pay in 4 with Tamara & Tabby"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",

@@ -8,9 +8,38 @@
     --header-padding-block: 1rem;
     --header-transparent-header-text-color: {{ section.settings.transparent_header_text_color.rgb }};
     --header-separation-border-color: {% if section.settings.show_separation_border %}{{ section.settings.color_scheme.settings.text_color.rgb }} / 0.15{% else %}0 0 0 / 0{% endif %};
+    --header-menu-font-size: {{ section.settings.menu_font_size | default: 13 }}px;
+    --header-menu-font-weight: {{ section.settings.menu_font_weight | default: '500' }};
+    --header-menu-spacing: {{ section.settings.menu_item_spacing | default: 16 }}px;
 
     position: relative;
     z-index: 4;
+  }
+
+  #shopify-section-{{ section.id }} .header__primary-nav-item > a,
+  #shopify-section-{{ section.id }} .header__primary-nav-item > details > summary {
+    font-size: var(--header-menu-font-size) !important;
+    font-weight: var(--header-menu-font-weight) !important;
+    padding-inline: calc(var(--header-menu-spacing) / 2) !important;
+  }
+
+  #shopify-section-{{ section.id }} .header__primary-nav > ul {
+    gap: calc(var(--header-menu-spacing) / 2) !important;
+  }
+
+  /* Fix menu hover - close dropdown when not hovered */
+  #shopify-section-{{ section.id }} .header__menu-disclosure:not(:hover):not(:focus-within) .header__dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+  }
+
+  #shopify-section-{{ section.id }} .header__menu-disclosure:hover .header__dropdown-menu,
+  #shopify-section-{{ section.id }} .header__menu-disclosure:focus-within .header__dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   @media screen and (min-width: 700px) {
@@ -420,6 +449,37 @@
         }
       ],
       "default": "heading"
+    },
+    {
+      "type": "range",
+      "id": "menu_font_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Menu font size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "menu_item_spacing",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Menu item spacing",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "menu_font_weight",
+      "label": "Menu font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" }
+      ],
+      "default": "500"
     },
     {
       "type": "checkbox",
