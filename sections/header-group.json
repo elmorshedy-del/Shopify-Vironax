@@ -76,7 +76,7 @@
         "reduce_padding": false,
         "logo": "shopify://shop_images/virona-logo-transparentclaude.png",
         "logo_max_width": 95,
-        "logo_mobile_max_width": 65,
+        "logo_mobile_max_width": 40,
         "menu": "main-menu",
         "sidebar_menu": "main-menu",
         "menu_open_trigger": "hover",
