@@ -368,17 +368,6 @@
         "reviews_link": "",
         "cta_text": "Read Reviews"
       }
-    },
-    "vironax_craftsmanship_9hXhB3": {
-      "type": "vironax-craftsmanship",
-      "name": "VironaX Craftsmanship",
-      "settings": {
-        "label": "Handcrafted in Turkey",
-        "headline": "Centuries of Silver Mastery",
-        "description": "Turkey has crafted silver for over 500 years. Our master artisans continue this tradition — transforming 925 sterling silver and certified gemstones into modern and Ottoman-inspired pieces, delivered to your door across Saudi Arabia and the Gulf.",
-        "button_text": "Watch with Sound",
-        "video_url": "https://cdn.shopify.com/videos/c/o/v/9cefc1d34e98447a91ec961b7607f79c.mp4"
-      }
     }
   },
   "order": [
@@ -391,7 +380,6 @@
     "vironax_category_banners_tLdEjg",
     "vironax_subcategory_row_rkzzKM",
     "vironax_bundle_promo_xA99RJ",
-    "vironax_about_us_VJAckB",
-    "vironax_craftsmanship_9hXhB3"
+    "vironax_about_us_VJAckB"
   ]
 }
