@@ -210,13 +210,42 @@ Supported variables
     background-color: transparent;
     border: none;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
     font-family: var(--vironax-font, 'Montserrat', sans-serif);
     font-size: 11px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #000000;
+    color: inherit;
+  }
+
+  /* Header localization selectors - inherit text color */
+  .header .vironax-localization-toggle,
+  .header__secondary-nav .vironax-localization-toggle,
+  .localization-selectors .vironax-localization-toggle,
+  x-header .vironax-localization-toggle {
+    color: currentColor;
+  }
+
+  .header .vironax-localization-toggle svg,
+  .header__secondary-nav .vironax-localization-toggle svg,
+  .localization-selectors .vironax-localization-toggle svg,
+  x-header .vironax-localization-toggle svg {
+    color: currentColor;
+    fill: none;
+    stroke: currentColor;
+  }
+
+  /* Transparent/dark header - white text */
+  .header--transparent .vironax-localization-toggle,
+  [data-transparent-header] .vironax-localization-toggle {
+    color: #FFFFFF !important;
+  }
+
+  .header--transparent .vironax-localization-toggle svg,
+  [data-transparent-header] .vironax-localization-toggle svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
   }
 
   .vironax-localization-toggle:hover {
