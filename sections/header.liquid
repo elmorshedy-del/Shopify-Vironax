@@ -108,6 +108,18 @@
 
         {%- if menu.links.size > 0 and section.settings.layout != 'drawer' -%}
           <ul class="contents unstyled-list md-max:hidden">
+            {%- comment -%}Custom Navigation Links from Blocks{%- endcomment -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'nav_link' -%}
+                <li class="header__primary-nav-item vironax-custom-nav-item" {{ block.shopify_attributes }}>
+                  <a href="{{ block.settings.link_url | default: '#' }}" class="block {% if section.settings.menu_text_font == 'heading' %}h6{% endif %}" {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %}>
+                    {{ block.settings.link_text }}
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- comment -%}Regular Menu Links{%- endcomment -%}
             {%- for link in menu.links -%}
               {% liquid
                 assign link_title_downcase = link.title | strip | downcase
@@ -547,6 +559,29 @@
     }
   ],
   "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Navigation Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link Text",
+          "default": "Home"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        }
+      ]
+    },
     {
       "type": "mega_menu",
       "name": "t:sections.header.blocks.mega_menu.name",

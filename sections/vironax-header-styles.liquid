@@ -31,15 +31,43 @@
   .nav a,
   .main-nav a,
   [class*="header"] nav a,
-  .header__menu-item {
+  .header__menu-item,
+  .header__primary-nav-item a,
+  .vironax-custom-nav-item a {
     font-family: var(--vironax-font) !important;
     font-size: 12px !important;
     font-weight: 500 !important;
     text-transform: uppercase !important;
     letter-spacing: var(--vironax-letter-spacing) !important;
-    color: var(--vironax-black) !important;
+    color: currentColor !important;
     text-decoration: none !important;
     transition: opacity 0.3s ease !important;
+  }
+
+  /* Custom navigation items - horizontal layout */
+  .vironax-custom-nav-item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .header__primary-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .header__primary-nav > ul {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__primary-nav-item {
+    display: inline-flex;
+    align-items: center;
   }
   
   .header__inline-menu a:hover,
@@ -116,7 +144,7 @@
     opacity: 0.6 !important;
   }
   
-  /* Currency/Language Selectors */
+  /* Currency/Language Selectors - White in Header */
   .localization-selector,
   .currency-selector,
   .language-selector,
@@ -127,7 +155,39 @@
     font-weight: 500 !important;
     text-transform: uppercase !important;
     letter-spacing: var(--vironax-letter-spacing-tight) !important;
-    color: var(--vironax-black) !important;
+  }
+
+  /* Header localization - inherit header text color */
+  .header .localization-selector,
+  .header .currency-selector,
+  .header .language-selector,
+  .header__secondary-nav .localization-selectors,
+  .header__secondary-nav .vironax-localization-selector,
+  .localization-selectors .vironax-localization-toggle,
+  x-header .vironax-localization-toggle,
+  x-header .localization-toggle {
+    color: currentColor !important;
+  }
+
+  x-header .vironax-localization-toggle svg,
+  .header .vironax-localization-toggle svg,
+  .localization-selectors svg {
+    color: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  /* Transparent header - white text for selectors */
+  .header--transparent .vironax-localization-toggle,
+  .header--transparent .localization-toggle,
+  [data-transparent-header] .vironax-localization-toggle,
+  [data-transparent-header] .localization-toggle {
+    color: #FFFFFF !important;
+  }
+
+  .header--transparent .vironax-localization-toggle svg,
+  [data-transparent-header] .vironax-localization-toggle svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
   }
   
   /* Logo */
